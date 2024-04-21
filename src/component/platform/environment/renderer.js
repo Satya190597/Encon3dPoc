@@ -2,7 +2,7 @@ import * as THREE from "three";
 export function getRenderer(animation) {
   const width = window.innerWidth;
   const height = window.innerHeight;
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true,preserveDrawingBuffer: true  });
   renderer.setSize(width, height);
   renderer.setAnimationLoop(animation);
   return renderer;

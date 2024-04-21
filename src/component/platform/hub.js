@@ -4,6 +4,7 @@ import { getScene } from "./environment/scene";
 import { getRenderer, addRenderer } from "./environment/renderer";
 import { movement } from "./environment/control";
 import { hub } from "./objects/hubObject";
+import * as THREE from "three";
 import {
   Button,
   Offcanvas,
@@ -60,21 +61,21 @@ const BLADE_MATERIAL = [
 ];
 
 const MATERIAL_COLOR = {
-  MATERIAL_ONE: '#525d91',
-  MATERIAL_TWO: '#03a2b0',
-  MATERIAL_THREE: '#0085ff',
+  MATERIAL_ONE: "#525d91",
+  MATERIAL_TWO: "#03a2b0",
+  MATERIAL_THREE: "#0085ff",
 };
 
 const CLAMP_MATERIAL_COLOR = {
-  CLAMP_MATERIAL_ONE: '#D35400',
-  CLAMP_MATERIAL_TWO: '#6C3483',
-  CLAMP_MATERIAL_THREE: '#1E8449',
+  CLAMP_MATERIAL_ONE: "#D35400",
+  CLAMP_MATERIAL_TWO: "#6C3483",
+  CLAMP_MATERIAL_THREE: "#1E8449",
 };
 
 const BLADE_MATERIAL_COLOR = {
-  BLADE_MATERIAL_ONE: '#707b7c',
-  BLADE_MATERIAL_TWO: '#f4d03f',
-  BLADE_MATERIAL_THREE: '#c0392b',
+  BLADE_MATERIAL_ONE: "#707b7c",
+  BLADE_MATERIAL_TWO: "#f4d03f",
+  BLADE_MATERIAL_THREE: "#c0392b",
 };
 
 function Hub() {
@@ -94,6 +95,8 @@ function Hub() {
   const [bladeAngle, setBladeAngle] = useState(BALDE_ANGLE[0].value);
   const [rpm, setRpm] = useState(0);
   const [weight, setWeight] = useState(10);
+  const [globalRenderer, setGlobalRenderer] = useState(null)
+
 
   function showCustomizeOption() {
     setCustomize(true);
@@ -188,6 +191,7 @@ function Hub() {
 
     //scene.add(bladeModel);
     const renderer = getRenderer(animation);
+    setGlobalRenderer(renderer);
     addRenderer(document.getElementById("platform3d"), renderer);
     function animation(time) {
       hubModel.rotation.y += rpm * 0.01;
@@ -211,8 +215,22 @@ function Hub() {
     return bladeModel;
   }
 
-  function getColor(colors,name) {
-    return colors[name]
+  function getColor(colors, name) {
+    return colors[name];
+  }
+
+  function exportImage() {
+    if(rpm>0) {
+      alert("Please stop any animation before exporting.")
+      return;
+    }
+    if(!globalRenderer)
+      return;
+    var imageData = globalRenderer.domElement.toDataURL();
+    const tempLink = document.createElement('a');
+    tempLink.href = imageData;
+    tempLink.setAttribute('download', 'drawing.png');
+    tempLink.click();
   }
 
   return (
@@ -229,6 +247,9 @@ function Hub() {
             </Button>
             <Button size="lg" onClick={openUnitTable} className="ms-2">
               Unit Table
+            </Button>
+            <Button size="lg" variant="danger" onClick={exportImage} className="ms-2" id="download-link">
+              Export
             </Button>
           </Nav>
         </Container>
@@ -327,7 +348,9 @@ function Hub() {
       >
         <OffcanvasHeader closeButton>Materials</OffcanvasHeader>
         <OffcanvasBody>
-          <span><b>Hub Material</b></span>
+          <span>
+            <b>Hub Material</b>
+          </span>
           <Table>
             <thead>
               <tr>
@@ -339,14 +362,27 @@ function Hub() {
               {MATERIAL_TYPE.map((element) => {
                 return (
                   <tr>
-                    <td><div style={{width:"50px",height:"50px",backgroundColor:getColor(MATERIAL_COLOR,element.value)}}></div></td>
+                    <td>
+                      <div
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          backgroundColor: getColor(
+                            MATERIAL_COLOR,
+                            element.value
+                          ),
+                        }}
+                      ></div>
+                    </td>
                     <td>{element.name}</td>
                   </tr>
                 );
               })}
             </tbody>
           </Table>
-          <span><b>Clamp Material</b></span>
+          <span>
+            <b>Clamp Material</b>
+          </span>
           <Table>
             <thead>
               <tr>
@@ -358,14 +394,27 @@ function Hub() {
               {CLAMP_MATERIAL_TYPE.map((element) => {
                 return (
                   <tr>
-                    <td><div style={{width:"50px",height:"50px",backgroundColor:getColor(CLAMP_MATERIAL_COLOR,element.value)}}></div></td>
+                    <td>
+                      <div
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          backgroundColor: getColor(
+                            CLAMP_MATERIAL_COLOR,
+                            element.value
+                          ),
+                        }}
+                      ></div>
+                    </td>
                     <td>{element.name}</td>
                   </tr>
                 );
               })}
             </tbody>
           </Table>
-          <span><b>Blade Material</b></span>
+          <span>
+            <b>Blade Material</b>
+          </span>
           <Table>
             <thead>
               <tr>
@@ -377,7 +426,18 @@ function Hub() {
               {BLADE_MATERIAL.map((element) => {
                 return (
                   <tr>
-                    <td><div style={{width:"50px",height:"50px",backgroundColor:getColor(BLADE_MATERIAL_COLOR,element.value)}}></div></td>
+                    <td>
+                      <div
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          backgroundColor: getColor(
+                            BLADE_MATERIAL_COLOR,
+                            element.value
+                          ),
+                        }}
+                      ></div>
+                    </td>
                     <td>{element.name}</td>
                   </tr>
                 );
@@ -389,11 +449,7 @@ function Hub() {
       {
         //=============================================================================
       }
-      <Offcanvas
-        show={unitTable}
-        onHide={hideUnitTable}
-        placement="end"
-      >
+      <Offcanvas show={unitTable} onHide={hideUnitTable} placement="end">
         <OffcanvasHeader closeButton>Unit Table</OffcanvasHeader>
         <OffcanvasBody>
           <Table>
@@ -414,7 +470,6 @@ function Hub() {
               </tr>
             </tbody>
           </Table>
-          
         </OffcanvasBody>
       </Offcanvas>
       <div id="platform3d"></div>
