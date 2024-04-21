@@ -13,6 +13,7 @@ import {
   Navbar,
   Container,
   Nav,
+  Table,
 } from "react-bootstrap";
 import { blade } from "./objects/bladeObject";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -58,8 +59,28 @@ const BLADE_MATERIAL = [
   { name: "Balde Material Three", value: "BLADE_MATERIAL_THREE" },
 ];
 
+const MATERIAL_COLOR = {
+  MATERIAL_ONE: '#525d91',
+  MATERIAL_TWO: '#03a2b0',
+  MATERIAL_THREE: '#0085ff',
+};
+
+const CLAMP_MATERIAL_COLOR = {
+  CLAMP_MATERIAL_ONE: '#D35400',
+  CLAMP_MATERIAL_TWO: '#6C3483',
+  CLAMP_MATERIAL_THREE: '#1E8449',
+};
+
+const BLADE_MATERIAL_COLOR = {
+  BLADE_MATERIAL_ONE: '#707b7c',
+  BLADE_MATERIAL_TWO: '#f4d03f',
+  BLADE_MATERIAL_THREE: '#c0392b',
+};
+
 function Hub() {
   const [customize, setCustomize] = useState(false);
+  const [materialTable, setMaterialTable] = useState(false);
+  const [unitTable, setUnitTable] = useState(false);
   const [material, setMaterial] = useState(MATERIAL_TYPE[0].value);
   const [clampMaterial, setClampMaterial] = useState(
     CLAMP_MATERIAL_TYPE[0].value
@@ -116,6 +137,18 @@ function Hub() {
   function changeRpm(event) {
     setRpm(parseInt(event.target.value));
   }
+  function hideMaterialTable() {
+    setMaterialTable(false);
+  }
+  function openMaterialTable() {
+    setMaterialTable(true);
+  }
+  function hideUnitTable() {
+    setUnitTable(false);
+  }
+  function openUnitTable() {
+    setUnitTable(true);
+  }
 
   useEffect(() => {
     render3D();
@@ -132,7 +165,7 @@ function Hub() {
     numberOfBlades,
     bladeMaterial,
     bladeAngle,
-    rpm
+    rpm,
   ]);
 
   function render3D() {
@@ -143,7 +176,8 @@ function Hub() {
       diameter,
       weight / 100,
       plateType,
-      clampMaterial
+      clampMaterial,
+      numberOfBlades
     );
     let bladeModel = blade(bladeMaterial, bladeAngle);
     adjustBladeModelPosition(bladeModel);
@@ -156,7 +190,7 @@ function Hub() {
     const renderer = getRenderer(animation);
     addRenderer(document.getElementById("platform3d"), renderer);
     function animation(time) {
-      hubModel.rotation.y += rpm*0.01;
+      hubModel.rotation.y += rpm * 0.01;
       renderer.render(scene, camera);
     }
     movement(hubModel);
@@ -177,6 +211,10 @@ function Hub() {
     return bladeModel;
   }
 
+  function getColor(colors,name) {
+    return colors[name]
+  }
+
   return (
     <>
       <Navbar bg="dark" data-bs-theme="dark">
@@ -185,6 +223,12 @@ function Hub() {
           <Nav className="me-auto">
             <Button size="lg" onClick={showCustomizeOption}>
               Customize Hub
+            </Button>
+            <Button size="lg" onClick={openMaterialTable} className="ms-2">
+              Material Table
+            </Button>
+            <Button size="lg" onClick={openUnitTable} className="ms-2">
+              Unit Table
             </Button>
           </Nav>
         </Container>
@@ -271,6 +315,106 @@ function Hub() {
           </Form.Select>
           <Form.Label className="mt-2">RPM : {rpm}</Form.Label>
           <Form.Range min={0} max={20} onChange={changeRpm} value={rpm} />
+        </OffcanvasBody>
+      </Offcanvas>
+      {
+        //=============================================================================
+      }
+      <Offcanvas
+        show={materialTable}
+        onHide={hideMaterialTable}
+        placement="end"
+      >
+        <OffcanvasHeader closeButton>Materials</OffcanvasHeader>
+        <OffcanvasBody>
+          <span><b>Hub Material</b></span>
+          <Table>
+            <thead>
+              <tr>
+                <th>Color</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {MATERIAL_TYPE.map((element) => {
+                return (
+                  <tr>
+                    <td><div style={{width:"50px",height:"50px",backgroundColor:getColor(MATERIAL_COLOR,element.value)}}></div></td>
+                    <td>{element.name}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+          <span><b>Clamp Material</b></span>
+          <Table>
+            <thead>
+              <tr>
+                <th>Color</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {CLAMP_MATERIAL_TYPE.map((element) => {
+                return (
+                  <tr>
+                    <td><div style={{width:"50px",height:"50px",backgroundColor:getColor(CLAMP_MATERIAL_COLOR,element.value)}}></div></td>
+                    <td>{element.name}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+          <span><b>Blade Material</b></span>
+          <Table>
+            <thead>
+              <tr>
+                <th>Color</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {BLADE_MATERIAL.map((element) => {
+                return (
+                  <tr>
+                    <td><div style={{width:"50px",height:"50px",backgroundColor:getColor(BLADE_MATERIAL_COLOR,element.value)}}></div></td>
+                    <td>{element.name}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </OffcanvasBody>
+      </Offcanvas>
+      {
+        //=============================================================================
+      }
+      <Offcanvas
+        show={unitTable}
+        onHide={hideUnitTable}
+        placement="end"
+      >
+        <OffcanvasHeader closeButton>Unit Table</OffcanvasHeader>
+        <OffcanvasBody>
+          <Table>
+            <thead>
+              <tr>
+                <th>Unit</th>
+                <th>Actual Unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 Rpm</td>
+                <td>50 Rpm</td>
+              </tr>
+              <tr>
+                <td>1 ' Blade Angle</td>
+                <td>45 '</td>
+              </tr>
+            </tbody>
+          </Table>
+          
         </OffcanvasBody>
       </Offcanvas>
       <div id="platform3d"></div>

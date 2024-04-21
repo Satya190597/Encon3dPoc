@@ -10,12 +10,19 @@ const MATERIAL_COLOR = {
 };
 
 const CLAMP_MATERIAL_COLOR = {
-  CLAMP_MATERIAL_ONE: 0xD35400,
-  CLAMP_MATERIAL_TWO: 0x6C3483,
-  CLAMP_MATERIAL_THREE: 0x1E8449,
+  CLAMP_MATERIAL_ONE: 0xd35400,
+  CLAMP_MATERIAL_TWO: 0x6c3483,
+  CLAMP_MATERIAL_THREE: 0x1e8449,
 };
 
-export function hub(material, diameter, weight, plateType,clampMaterial) {
+export function hub(
+  material,
+  diameter,
+  weight,
+  plateType,
+  clampMaterial,
+  numberOfBlades
+) {
   // ======================== Geometry ========================
   const cylinderGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
   const cylinderGeometryHole = new THREE.CylinderGeometry(
@@ -51,7 +58,12 @@ export function hub(material, diameter, weight, plateType,clampMaterial) {
     32
   );
   const clampCylinderGeometry = new THREE.CylinderGeometry(0.2, 0.2, 0.5, 32);
-  const clampCylinderSubGeometry = new THREE.CylinderGeometry(0.2, 0.2, 0.63, 32);
+  const clampCylinderSubGeometry = new THREE.CylinderGeometry(
+    0.2,
+    0.2,
+    0.63,
+    32
+  );
   const clampFrontGeometry = new THREE.BoxGeometry(0.2, 0.6, 0.6);
   // ======================== Creating Mesh With Geometry ========================
   let cylinder = new THREE.Mesh(cylinderGeometry, basic(getColor(material)));
@@ -85,7 +97,10 @@ export function hub(material, diameter, weight, plateType,clampMaterial) {
     clampFrontGeometry,
     basic(getClampColor(clampMaterial))
   );
-  let clampCylinderSub = new THREE.Mesh(clampCylinderSubGeometry,basic(0x000000));
+  let clampCylinderSub = new THREE.Mesh(
+    clampCylinderSubGeometry,
+    basic(0x000000)
+  );
   // ======================== Set Position ========================
   cylinderTopPlate.position.set(0, 0.5, 0);
   cylinderTopPlate.updateMatrix();
@@ -103,7 +118,7 @@ export function hub(material, diameter, weight, plateType,clampMaterial) {
   clampCylinder.updateMatrix();
   clampFront.position.set(0, 0.2, 0);
   clampFront.updateMatrix();
-  clampCylinderSub.position.set(-0.2,0,0);
+  clampCylinderSub.position.set(-0.2, 0, 0);
   clampCylinderSub.updateMatrix();
   // ======================== Set Rotation ========================
   clampCylinder.rotation.z = 1.6;
@@ -118,23 +133,23 @@ export function hub(material, diameter, weight, plateType,clampMaterial) {
   hub = CSG.subtract(hub, cylinderHole);
   hubTopPlate = CSG.subtract(hubTopPlate, hubTopPlateHole);
   hubBottomPlate = CSG.subtract(hubBottomPlate, hubBottomPlateHole);
-  clampCylinder = CSG.subtract(clampCylinder,clampCylinderSub);
+  clampCylinder = CSG.subtract(clampCylinder, clampCylinderSub);
   clampCylinder.add(clampFront);
   let clampBack = clampFront.clone();
   clampBack.position.set(0, -0.2, 0);
   clampBack.updateMatrix();
   clampCylinder.add(clampBack);
-  clampCylinder.add(clampCylinderSub)
+  clampCylinder.add(clampCylinderSub);
   clampCylinder.updateMatrix();
 
   let bottomClamp = clampCylinder.clone();
-  
+
   bottomClamp.position.set(1.5, -0.2, 0);
   bottomClamp.rotation.x = 3.11;
 
-  clampCylinder.scale.set(0.5,0.5,0.5);
-  bottomClamp.scale.set(0.5,0.5,0.5);
-  
+  clampCylinder.scale.set(0.5, 0.5, 0.5);
+  bottomClamp.scale.set(0.5, 0.5, 0.5);
+
   // ======================== Add Wireframe Or other additional objects. ========================
   hub.add(wireframe(hub.geometry));
   if (plateType === "DOUBLE") {
@@ -145,10 +160,14 @@ export function hub(material, diameter, weight, plateType,clampMaterial) {
     hubBottomPlate.add(wireframe(hubBottomPlate.geometry));
     hub.add(hubBottomPlate);
   }
-  hub.add(clampCylinder);
-  hub.add(bottomClamp);
-  hub.add(mirrorClampCylinder(clampCylinder.clone()));
-  hub.add(mirrorClampCylinder(bottomClamp.clone()));
+  if (numberOfBlades >= 1) {
+    hub.add(clampCylinder);
+    hub.add(bottomClamp);
+  }
+  if (numberOfBlades >= 2) {
+    hub.add(mirrorClampCylinder(clampCylinder.clone()));
+    hub.add(mirrorClampCylinder(bottomClamp.clone()));
+  }
   //hub.add(clampFront)
   // ======================== Scale Hub Object ========================
   hub.scale.set(1 + weight, 1 + weight, 1 + weight);
