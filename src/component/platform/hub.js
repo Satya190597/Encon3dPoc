@@ -237,7 +237,7 @@ function Hub() {
     <>
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#">ENCON 3D</Navbar.Brand>
+          <Navbar.Brand href="#">GeoVed 3D Model</Navbar.Brand>
           <Nav className="me-auto">
             <Button size="lg" onClick={showCustomizeOption}>
               Customize Hub
