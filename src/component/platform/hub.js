@@ -15,26 +15,29 @@ import {
   Container,
   Nav,
   Table,
+  OverlayTrigger,
+  Popover,
+  Badge,
 } from "react-bootstrap";
 import { blade } from "./objects/bladeObject";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const MATERIAL_TYPE = [
-  { name: "Material One", value: "MATERIAL_ONE" },
-  { name: "Material Two", value: "MATERIAL_TWO" },
-  { name: "Material Three", value: "MATERIAL_THREE" },
+  { name: "Material One", value: "MATERIAL_ONE", cost: 29999 },
+  { name: "Material Two", value: "MATERIAL_TWO", cost: 49999 },
+  { name: "Material Three", value: "MATERIAL_THREE", cost: 49999 },
 ];
 
 const CLAMP_MATERIAL_TYPE = [
-  { name: "Material One", value: "CLAMP_MATERIAL_ONE" },
-  { name: "Material Two", value: "CLAMP_MATERIAL_TWO" },
-  { name: "Material Three", value: "CLAMP_MATERIAL_THREE" },
+  { name: "Material One", value: "CLAMP_MATERIAL_ONE", cost: 9999 },
+  { name: "Material Two", value: "CLAMP_MATERIAL_TWO", cost: 8999 },
+  { name: "Material Three", value: "CLAMP_MATERIAL_THREE", cost: 2999 },
 ];
 
 const HUB_DIAMETER = [
-  { name: "1 M", value: 0 },
-  { name: "2 M", value: 0.2 },
-  { name: "3 M", value: 0.27 },
+  { name: "1 M", value: 0,valueCal:1 },
+  { name: "2 M", value: 0.2,valueCal:2 },
+  { name: "3 M", value: 0.27,valueCal:3 },
 ];
 
 const BALDE_ANGLE = [
@@ -55,9 +58,9 @@ const PLATE_TYPE = [
 ];
 
 const BLADE_MATERIAL = [
-  { name: "Blade Material One", value: "BLADE_MATERIAL_ONE" },
-  { name: "Blade Material Two", value: "BLADE_MATERIAL_TWO" },
-  { name: "Balde Material Three", value: "BLADE_MATERIAL_THREE" },
+  { name: "Blade Material One", value: "BLADE_MATERIAL_ONE", cost: 59999 },
+  { name: "Blade Material Two", value: "BLADE_MATERIAL_TWO", cost: 89999 },
+  { name: "Balde Material Three", value: "BLADE_MATERIAL_THREE", cost: 29999 },
 ];
 
 const MATERIAL_COLOR = {
@@ -78,6 +81,48 @@ const BLADE_MATERIAL_COLOR = {
   BLADE_MATERIAL_THREE: "#c0392b",
 };
 
+const popover = (
+  <Popover id="popover-basic">
+    <Popover.Header as="h3">Material Info</Popover.Header>
+    <Popover.Body>
+      Fabricated steel is steel that has been transformed into a product or item
+      through a process called steel fabrication.
+    </Popover.Body>
+  </Popover>
+);
+
+const unitpopover = (
+  <Popover id="popover-basic">
+    <Popover.Header as="h3">RPM</Popover.Header>
+    <Popover.Body>
+      RPM stands for "revolutions per minute" and is a unit of measurement for
+      rotational speed. It indicates how many times something rotates in a
+      circle per minute.
+    </Popover.Body>
+  </Popover>
+);
+
+const anglepopover = (
+  <Popover id="popover-basic">
+    <Popover.Header as="h3">Blade Angle</Popover.Header>
+    <Popover.Body>
+      Blade angle refers to the orientation of a blade relative to its axis or
+      the surface it's cutting. It's a critical aspect in various applications,
+      especially in tools like knives, saws, and propellers.
+    </Popover.Body>
+  </Popover>
+);
+
+const hubdiameterpopover = (
+  <Popover id="popover-basic">
+    <Popover.Header as="h3">Hub Diameter</Popover.Header>
+    <Popover.Body>
+      The hub diameter refers to the diameter of the central component of a
+      rotating device, such as a propeller, rotor, or turbine
+    </Popover.Body>
+  </Popover>
+);
+
 function Hub() {
   const [customize, setCustomize] = useState(false);
   const [materialTable, setMaterialTable] = useState(false);
@@ -88,6 +133,7 @@ function Hub() {
   );
   const [bladeMaterial, setBladeMaterial] = useState(BLADE_MATERIAL[0].value);
   const [diameter, setDiameter] = useState(HUB_DIAMETER[0].value);
+  const [diameterName, setDiameterName] = useState(HUB_DIAMETER[0].valueCal);
   const [plateType, setPlateType] = useState(PLATE_TYPE[0].value);
   const [numberOfBlades, setNumberOfBlades] = useState(
     NUMBER_OF_BLADES[1].value
@@ -95,8 +141,7 @@ function Hub() {
   const [bladeAngle, setBladeAngle] = useState(BALDE_ANGLE[0].value);
   const [rpm, setRpm] = useState(0);
   const [weight, setWeight] = useState(10);
-  const [globalRenderer, setGlobalRenderer] = useState(null)
-
+  const [globalRenderer, setGlobalRenderer] = useState(null);
 
   function showCustomizeOption() {
     setCustomize(true);
@@ -112,6 +157,7 @@ function Hub() {
 
   function changeDiameter(event) {
     setDiameter(parseFloat(event.target.value));
+    setDiameterName(HUB_DIAMETER.filter(element => element.value === parseFloat(event.target.value))[0].valueCal);
   }
 
   function changeWeight(event) {
@@ -220,16 +266,15 @@ function Hub() {
   }
 
   function exportImage() {
-    if(rpm>0) {
-      alert("Please stop any animation before exporting.")
+    if (rpm > 0) {
+      alert("Please stop any animation before exporting.");
       return;
     }
-    if(!globalRenderer)
-      return;
+    if (!globalRenderer) return;
     var imageData = globalRenderer.domElement.toDataURL();
-    const tempLink = document.createElement('a');
+    const tempLink = document.createElement("a");
     tempLink.href = imageData;
-    tempLink.setAttribute('download', 'drawing.png');
+    tempLink.setAttribute("download", "drawing.png");
     tempLink.click();
   }
 
@@ -248,14 +293,22 @@ function Hub() {
             <Button size="lg" onClick={openUnitTable} className="ms-2">
               Unit Table
             </Button>
-            <Button size="lg" variant="danger" onClick={exportImage} className="ms-2" id="download-link">
+            <Button
+              size="lg"
+              variant="danger"
+              onClick={exportImage}
+              className="ms-2"
+              id="download-link"
+            >
               Export
             </Button>
           </Nav>
         </Container>
       </Navbar>
       <Offcanvas show={customize} onHide={hideCustomizeOption}>
-        <OffcanvasHeader closeButton>Custommize Hub</OffcanvasHeader>
+        <OffcanvasHeader closeButton>
+          <h2>Custommize Hub</h2>
+        </OffcanvasHeader>
         <OffcanvasBody>
           <Form.Label>Hub Material</Form.Label>
           <Form.Select onChange={changeMaterial} value={material}>
@@ -346,7 +399,9 @@ function Hub() {
         onHide={hideMaterialTable}
         placement="end"
       >
-        <OffcanvasHeader closeButton>Materials</OffcanvasHeader>
+        <OffcanvasHeader closeButton>
+          <h2>Materials</h2>
+        </OffcanvasHeader>
         <OffcanvasBody>
           <span>
             <b>Hub Material</b>
@@ -362,19 +417,36 @@ function Hub() {
               {MATERIAL_TYPE.map((element) => {
                 return (
                   <tr>
-                    <td>
-                      <div
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          backgroundColor: getColor(
-                            MATERIAL_COLOR,
-                            element.value
-                          ),
-                        }}
-                      ></div>
+                    <td style={{ cursor: "pointer" }}>
+                      <OverlayTrigger
+                        trigger="click"
+                        placement="left"
+                        overlay={popover}
+                      >
+                        <div
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            backgroundColor: getColor(
+                              MATERIAL_COLOR,
+                              element.value
+                            ),
+                          }}
+                        ></div>
+                      </OverlayTrigger>
                     </td>
-                    <td>{element.name}</td>
+                    <td
+                      className={
+                        material === element.value ? "text-white bg-dark" : ""
+                      }
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setMaterial(element.value)}
+                    >
+                      <div>
+                        {element.name}
+                        <br></br>Material Cost : <b>{element.cost}</b>
+                      </div>
+                    </td>
                   </tr>
                 );
               })}
@@ -394,19 +466,38 @@ function Hub() {
               {CLAMP_MATERIAL_TYPE.map((element) => {
                 return (
                   <tr>
-                    <td>
-                      <div
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          backgroundColor: getColor(
-                            CLAMP_MATERIAL_COLOR,
-                            element.value
-                          ),
-                        }}
-                      ></div>
+                    <td style={{ cursor: "pointer" }}>
+                      <OverlayTrigger
+                        trigger="click"
+                        placement="left"
+                        overlay={popover}
+                      >
+                        <div
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            backgroundColor: getColor(
+                              CLAMP_MATERIAL_COLOR,
+                              element.value
+                            ),
+                          }}
+                        ></div>
+                      </OverlayTrigger>
                     </td>
-                    <td>{element.name}</td>
+                    <td
+                      className={
+                        clampMaterial === element.value
+                          ? "text-white bg-dark"
+                          : ""
+                      }
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setClampMaterial(element.value)}
+                    >
+                      <div>
+                        {element.name}
+                        <br></br>Material Cost : <b>{element.cost}</b>
+                      </div>
+                    </td>
                   </tr>
                 );
               })}
@@ -426,19 +517,38 @@ function Hub() {
               {BLADE_MATERIAL.map((element) => {
                 return (
                   <tr>
-                    <td>
-                      <div
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          backgroundColor: getColor(
-                            BLADE_MATERIAL_COLOR,
-                            element.value
-                          ),
-                        }}
-                      ></div>
+                    <td style={{ cursor: "pointer" }}>
+                      <OverlayTrigger
+                        trigger="click"
+                        placement="left"
+                        overlay={popover}
+                      >
+                        <div
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            backgroundColor: getColor(
+                              BLADE_MATERIAL_COLOR,
+                              element.value
+                            ),
+                          }}
+                        ></div>
+                      </OverlayTrigger>
                     </td>
-                    <td>{element.name}</td>
+                    <td
+                      className={
+                        bladeMaterial === element.value
+                          ? "text-white bg-dark"
+                          : ""
+                      }
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setBladeMaterial(element.value)}
+                    >
+                      <div>
+                        {element.name}
+                        <br></br>Material Cost : <b>{element.cost}</b>
+                      </div>
+                    </td>
                   </tr>
                 );
               })}
@@ -450,7 +560,9 @@ function Hub() {
         //=============================================================================
       }
       <Offcanvas show={unitTable} onHide={hideUnitTable} placement="end">
-        <OffcanvasHeader closeButton>Unit Table</OffcanvasHeader>
+        <OffcanvasHeader closeButton>
+          <h2>Unit Table</h2>
+        </OffcanvasHeader>
         <OffcanvasBody>
           <Table>
             <thead>
@@ -461,12 +573,55 @@ function Hub() {
             </thead>
             <tbody>
               <tr>
-                <td>1 Rpm</td>
-                <td>50 Rpm</td>
+                <td>
+                  <OverlayTrigger
+                    trigger="click"
+                    placement="left"
+                    overlay={unitpopover}
+                  >
+                    <span style={{ cursor: "pointer" }}>
+                      <Badge pill bg="primary">
+                        !
+                      </Badge>{" "}
+                      <b>1 RPM</b>
+                    </span>
+                  </OverlayTrigger>
+                </td>
+                <td>0.02 RPS Rpm</td>
               </tr>
               <tr>
-                <td>1 ' Blade Angle</td>
+                <td>
+                  <OverlayTrigger
+                    trigger="click"
+                    placement="left"
+                    overlay={anglepopover}
+                  >
+                    <span style={{ cursor: "pointer" }}>
+                      <Badge pill bg="primary">
+                        !
+                      </Badge>{" "}
+                      <b>1 ' Blade Angle</b>
+                    </span>
+                  </OverlayTrigger>
+                </td>
                 <td>45 '</td>
+              </tr>
+              <tr>
+                <td>
+                  <OverlayTrigger
+                    trigger="click"
+                    placement="left"
+                    overlay={hubdiameterpopover}
+                  >
+                    <span style={{ cursor: "pointer" }}>
+                      <Badge pill bg="primary">
+                        !
+                      </Badge>{" "}
+                      <b>Hub Diameter - {diameterName} mm</b>
+                    </span>
+                  </OverlayTrigger>
+                </td>
+                <td>{((diameterName+1) * 0.0393701).toFixed(5)} Inch</td>
               </tr>
             </tbody>
           </Table>
