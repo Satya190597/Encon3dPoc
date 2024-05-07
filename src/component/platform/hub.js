@@ -35,9 +35,9 @@ const CLAMP_MATERIAL_TYPE = [
 ];
 
 const HUB_DIAMETER = [
-  { name: "1 M", value: 0,valueCal:1 },
-  { name: "2 M", value: 0.2,valueCal:2 },
-  { name: "3 M", value: 0.27,valueCal:3 },
+  { name: "1 M", value: 0, valueCal: 1 },
+  { name: "2 M", value: 0.2, valueCal: 2 },
+  { name: "3 M", value: 0.27, valueCal: 3 },
 ];
 
 const BALDE_ANGLE = [
@@ -143,6 +143,10 @@ function Hub() {
   const [weight, setWeight] = useState(10);
   const [globalRenderer, setGlobalRenderer] = useState(null);
 
+  const [bladeAxisAngle, setBladeAxisAngle] = useState(0);
+
+  const [assembleHubAndPlate, setAssembleHubAndPlate] = useState(false);
+
   function showCustomizeOption() {
     setCustomize(true);
   }
@@ -157,7 +161,11 @@ function Hub() {
 
   function changeDiameter(event) {
     setDiameter(parseFloat(event.target.value));
-    setDiameterName(HUB_DIAMETER.filter(element => element.value === parseFloat(event.target.value))[0].valueCal);
+    setDiameterName(
+      HUB_DIAMETER.filter(
+        (element) => element.value === parseFloat(event.target.value)
+      )[0].valueCal
+    );
   }
 
   function changeWeight(event) {
@@ -198,6 +206,12 @@ function Hub() {
   function openUnitTable() {
     setUnitTable(true);
   }
+  function changeBladeAxisAngle(event) {
+    setBladeAxisAngle(parseFloat(event.target.value));
+  }
+  function changeHubAndPlateAssembleFlag() {
+    setAssembleHubAndPlate(!assembleHubAndPlate);
+  }
 
   useEffect(() => {
     render3D();
@@ -215,10 +229,12 @@ function Hub() {
     bladeMaterial,
     bladeAngle,
     rpm,
+    bladeAxisAngle,
+    assembleHubAndPlate
   ]);
 
   function render3D() {
-    const camera = getCamera(5);
+    const camera = getCamera(10);
     const scene = getScene();
     const hubModel = hub(
       material,
@@ -226,36 +242,59 @@ function Hub() {
       weight / 100,
       plateType,
       clampMaterial,
-      numberOfBlades
+      numberOfBlades,
+      scene,
+      assembleHubAndPlate
     );
     let bladeModel = blade(bladeMaterial, bladeAngle);
     adjustBladeModelPosition(bladeModel);
-    if (numberOfBlades >= 1) hubModel.add(bladeModel);
-    if (numberOfBlades >= 2)
+    if (numberOfBlades >= 1) {
+      hubModel.add(bladeModel);
+    }
+    if (numberOfBlades >= 2) {
       hubModel.add(mirronBaldeModelPosition(bladeModel.clone()));
+    }
     scene.add(hubModel);
 
-    //scene.add(bladeModel);
     const renderer = getRenderer(animation);
     setGlobalRenderer(renderer);
     addRenderer(document.getElementById("platform3d"), renderer);
+
+    // var wireframeGeometry = new THREE.EdgesGeometry(hubModel.geometry); // Edges geometry
+    // var wireframeMaterial = new THREE.LineBasicMaterial({ color: 0x000000,linewidth: 5 }); // Wireframe material
+    // var wireframe = new THREE.LineSegments(wireframeGeometry, wireframeMaterial);
+
+    // scene.add(wireframe)
+
+    //updateWireframePosition(wireframe,hubModel)
+
     function animation(time) {
       hubModel.rotation.y += rpm * 0.01;
       renderer.render(scene, camera);
+      //updateWireframePosition(wireframe,hubModel)
+      
     }
     movement(hubModel);
   }
 
+  function updateWireframePosition(wireframe,mesh) {
+    wireframe.position.copy(mesh.position);
+    wireframe.rotation.copy(mesh.rotation);
+    wireframe.scale.copy(mesh.scale);
+}
+
+
+
   function adjustBladeModelPosition(bladeModel) {
-    bladeModel.position.set(3.5, 0, 0);
-    bladeModel.rotation.x = 1.6;
+    bladeModel.position.set(5, 0, 0);
+    bladeModel.rotation.x = bladeAxisAngle; // TODO : Add Balde Rotation
     bladeModel.rotation.y = 0;
     bladeModel.rotation.z = -1.6;
   }
 
   function mirronBaldeModelPosition(bladeModel) {
-    bladeModel.position.set(-3.5, 0, 0);
-    bladeModel.rotation.x = 1.6;
+    bladeModel.position.set(-5, 0, 0);
+    bladeModel.rotation.x = bladeAxisAngle; // TODO : Add Balde Rotation
     bladeModel.rotation.y = 3.1;
     bladeModel.rotation.z = -1.6;
     return bladeModel;
@@ -377,7 +416,7 @@ function Hub() {
               );
             })}
           </Form.Select>
-          <Form.Label className="mt-2">Blade Angle</Form.Label>
+          <Form.Label className="mt-2">Blade Tip Angle</Form.Label>
           <Form.Select onChange={changeBladeAngle} value={bladeAngle}>
             {BALDE_ANGLE.map((element) => {
               return (
@@ -389,6 +428,25 @@ function Hub() {
           </Form.Select>
           <Form.Label className="mt-2">RPM : {rpm}</Form.Label>
           <Form.Range min={0} max={20} onChange={changeRpm} value={rpm} />
+
+          <Form.Label className="mt-2">
+            Blade Angle : {bladeAxisAngle}
+          </Form.Label>
+          <Form.Range
+            min={0}
+            max={2}
+            step={0.01}
+            onChange={changeBladeAxisAngle}
+            value={bladeAxisAngle}
+          />
+          <Form.Check
+            checked={assembleHubAndPlate}
+            onChange={changeHubAndPlateAssembleFlag}
+            className="mt-2"
+            type="switch"
+            id="assemble-hub-panel"
+            label="Assemble Hub And Plate"
+          />
         </OffcanvasBody>
       </Offcanvas>
       {
@@ -621,7 +679,7 @@ function Hub() {
                     </span>
                   </OverlayTrigger>
                 </td>
-                <td>{((diameterName+1) * 0.0393701).toFixed(5)} Inch</td>
+                <td>{((diameterName + 1) * 0.0393701).toFixed(5)} Inch</td>
               </tr>
             </tbody>
           </Table>

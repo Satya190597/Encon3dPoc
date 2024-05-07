@@ -10,11 +10,11 @@ const MATERIAL_COLOR = {
 };
 
 export function blade(material,bladeAngle) {
-  const cylinderGeometry = new THREE.CylinderGeometry(bladeAngle, 0.5, 2.5, 2);
-  const cylinderHolderGeometry = new THREE.CylinderGeometry(0.2, 0.2, 0.5, 32);
+  const cylinderGeometry = new THREE.CylinderGeometry(0.4, 0.7, 5.5, 2);
+  const cylinderHolderGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.5, 32);
   const cylinderHolderPlateGeometry = new THREE.CylinderGeometry(
-    0.3,
-    0.3,
+    0.5,
+    0.5,
     0.2,
     32
   );
@@ -27,7 +27,7 @@ export function blade(material,bladeAngle) {
     cylinderHolderPlateGeometry,
     basic(0x03a2b0)
   );
-  cylinderHolder.position.y = -1.3;
+  cylinderHolder.position.y = -2.8;
   cylinderHolder.add(wireframe(cylinderHolder.geometry));
   cylinderHolder.updateMatrix();
   cylinderHolderPlate.add(wireframe(cylinderHolderPlate.geometry));

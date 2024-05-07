@@ -1,4 +1,6 @@
 import * as THREE from "three";
 export function getScene() {
-  return new THREE.Scene();
+  const scene = new THREE.Scene();
+  scene.matrixAutoUpdate = false;
+  return scene;
 }

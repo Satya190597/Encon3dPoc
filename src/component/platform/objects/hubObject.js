@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { CSG } from "three-csg-ts";
 import { basic } from "../materials/basic";
 import { wireframe } from "../materials/wireframe";
+import { plateObject } from "./clamp";
 
 const MATERIAL_COLOR = {
   MATERIAL_ONE: 0x525d91,
@@ -21,36 +22,38 @@ export function hub(
   weight,
   plateType,
   clampMaterial,
-  numberOfBlades
+  numberOfBlades,
+  scene,
+  assembleHubAndPlate
 ) {
   // ======================== Geometry ========================
-  const cylinderGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
+  const cylinderGeometry = new THREE.CylinderGeometry(diameter+1, diameter+1, 2, 32);
   const cylinderGeometryHole = new THREE.CylinderGeometry(
-    0.2 + diameter,
-    0.2 + diameter,
-    1.2,
+    0.9 + diameter,
+    0.9 + diameter,
+    3,
     32
   );
   const cylinderTopPlateGeometry = new THREE.CylinderGeometry(
-    0.7 + diameter,
-    0.7 + diameter,
+    2 + diameter,
+    2 + diameter,
     0.2,
     32
   );
   const cylinderBottomPlateGeometry = new THREE.CylinderGeometry(
-    0.7 + diameter,
-    0.7 + diameter,
+    2 + diameter,
+    2 + diameter,
     0.2,
     32
   );
-  const hubTopPlateGeometry = new THREE.CylinderGeometry(1.7, 1.7, 0.1, 32);
+  const hubTopPlateGeometry = new THREE.CylinderGeometry(1.7, 1.7, 0.2, 32);
   const hubTopPlateHoleGeometry = new THREE.CylinderGeometry(
     0.7 + diameter,
     0.7 + diameter,
     0.1,
     32
   );
-  const hubBottomPlateGeometry = new THREE.CylinderGeometry(1.7, 1.7, 0.1, 32);
+  const hubBottomPlateGeometry = new THREE.CylinderGeometry(1.7, 1.7, 0.2, 32);
   const hubTopBottomHoleGeometry = new THREE.CylinderGeometry(
     0.7 + diameter,
     0.7 + diameter,
@@ -66,10 +69,11 @@ export function hub(
   );
   const clampFrontGeometry = new THREE.BoxGeometry(0.2, 0.6, 0.6);
   // ======================== Creating Mesh With Geometry ========================
-  let cylinder = new THREE.Mesh(cylinderGeometry, basic(getColor(material)));
+  let cylinder = new THREE.Mesh(cylinderGeometry,  basic(getColor(material)));
   let cylinderHole = new THREE.Mesh(
     cylinderGeometryHole,
-    basic(getColor(material))
+    //basic(getColor(material))
+    basic(0xd35400)
   );
   let cylinderTopPlate = new THREE.Mesh(
     cylinderTopPlateGeometry,
@@ -102,9 +106,9 @@ export function hub(
     basic(0x000000)
   );
   // ======================== Set Position ========================
-  cylinderTopPlate.position.set(0, 0.5, 0);
+  cylinderTopPlate.position.set(0, 1, 0);
   cylinderTopPlate.updateMatrix();
-  cylinderBottomPlate.position.set(0, -0.5, 0);
+  cylinderBottomPlate.position.set(0, -1, 0);
   cylinderBottomPlate.updateMatrix();
   hubTopPlate.position.set(0, 1, 0);
   hubTopPlate.updateMatrix();
@@ -153,12 +157,20 @@ export function hub(
   // ======================== Add Wireframe Or other additional objects. ========================
   hub.add(wireframe(hub.geometry));
   if (plateType === "DOUBLE") {
-    hubTopPlate.add(wireframe(hubTopPlate.geometry));
-    hub.add(hubTopPlate);
+    // hubTopPlate.add(wireframe(hubTopPlate.geometry));
+    // hub.add(hubTopPlate);
+    const plate = plateObject(4, 0.2, 0xAED6F1, 0.2, scene,numberOfBlades);
+    if (assembleHubAndPlate) plate.position.y = 1.02;
+    else plate.position.y = 1.7;
+    hub.add(plate);
   }
   if (plateType === "DOUBLE" || plateType === "SINGLE") {
-    hubBottomPlate.add(wireframe(hubBottomPlate.geometry));
-    hub.add(hubBottomPlate);
+    //hubBottomPlate.add(wireframe(hubBottomPlate.geometry));
+    //hub.add(hubBottomPlate);
+    const plate = plateObject(4, 0.2, 0xAED6F1, 0.2, scene,numberOfBlades);
+    if (assembleHubAndPlate) plate.position.y = -1.02;
+    else plate.position.y = -1.7;
+    hub.add(plate);
   }
   if (numberOfBlades >= 1) {
     hub.add(clampCylinder);
