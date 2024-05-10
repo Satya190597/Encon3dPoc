@@ -3,13 +3,13 @@ import { CSG } from "three-csg-ts";
 import { basic } from "../materials/basic";
 import { wireframe } from "../materials/wireframe";
 import { plateObject } from "./clamp";
+import Config from "../config/modelConfig"
 
 const MATERIAL_COLOR = {
   MATERIAL_ONE: 0x525d91,
   MATERIAL_TWO: 0x03a2b0,
   MATERIAL_THREE: 0x0085ff,
 };
-
 const CLAMP_MATERIAL_COLOR = {
   CLAMP_MATERIAL_ONE: 0xd35400,
   CLAMP_MATERIAL_TWO: 0x6c3483,
@@ -172,14 +172,14 @@ export function hub(
     else plate.position.y = -1.7;
     hub.add(plate);
   }
-  if (numberOfBlades >= 1) {
-    hub.add(clampCylinder);
-    hub.add(bottomClamp);
-  }
-  if (numberOfBlades >= 2) {
-    hub.add(mirrorClampCylinder(clampCylinder.clone()));
-    hub.add(mirrorClampCylinder(bottomClamp.clone()));
-  }
+  // if (numberOfBlades >= 1) {
+  //   hub.add(clampCylinder);
+  //   hub.add(bottomClamp);
+  // }
+  // if (numberOfBlades >= 2) {
+  //   hub.add(mirrorClampCylinder(clampCylinder.clone()));
+  //   hub.add(mirrorClampCylinder(bottomClamp.clone()));
+  // }
   //hub.add(clampFront)
   // ======================== Scale Hub Object ========================
   hub.scale.set(1 + weight, 1 + weight, 1 + weight);
