@@ -248,7 +248,9 @@ function Hub() {
       assembleHubAndPlate
     );
     let bladeModel = blade(bladeMaterial, bladeAngle);
+    const bladeA = blade(bladeMaterial, bladeAngle);
     adjustBladeModelPosition(bladeModel);
+    adjustBladeModelPositionX(bladeA)
     if (numberOfBlades >= 1) {
       hubModel.add(bladeModel);
      
@@ -257,8 +259,6 @@ function Hub() {
       hubModel.add(mirronBaldeModelPosition(bladeModel.clone()));
     }
     if(numberOfBlades >= 4) {
-      const bladeA = blade(bladeMaterial, bladeAngle);
-      adjustBladeModelPositionX(bladeA)
       hubModel.add(bladeA);
       hubModel.add(mirrionBladeModelPostitionX(bladeA));
     }
@@ -294,8 +294,8 @@ function Hub() {
 
   function adjustBladeModelPositionX(bladeModel) {
     bladeModel.position.set(0, 0, 6);
-    bladeModel.rotation.x = Math.PI/2; // TODO : Add Balde Rotation
-    bladeModel.rotation.y = -Math.PI/2;
+    bladeModel.rotation.x =  Math.PI/2; // TODO : Add Balde Rotation
+    bladeModel.rotation.y = -(Math.PI/2)+bladeAxisAngle;
     bladeModel.rotation.z = 0;
   }
 
@@ -305,7 +305,7 @@ function Hub() {
     const blade = bladeModel.clone();
     blade.position.set(-blade.position.x,-blade.position.y,-blade.position.z);
     blade.rotation.x = -blade.rotation.x;
-    blade.rotation.y = -blade.rotation.x;
+    blade.rotation.y = -blade.rotation.y;
     return blade;
   }
 
