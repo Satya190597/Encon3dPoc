@@ -24,7 +24,8 @@ export function hub(
   clampMaterial,
   numberOfBlades,
   scene,
-  assembleHubAndPlate
+  assembleHubAndPlate,
+  highlight
 ) {
   // ======================== Geometry ========================
   const cylinderGeometry = new THREE.CylinderGeometry(diameter+1, diameter+1, 2, 32);
@@ -159,17 +160,21 @@ export function hub(
   if (plateType === "DOUBLE") {
     // hubTopPlate.add(wireframe(hubTopPlate.geometry));
     // hub.add(hubTopPlate);
-    const plate = plateObject(4, 0.2, 0xAED6F1, 0.2, scene,numberOfBlades);
+    const plate = plateObject(4, 0.2, 0xAED6F1, 0.2, scene,numberOfBlades,highlight);
     if (assembleHubAndPlate) plate.position.y = 1.02;
     else plate.position.y = 1.7;
+    if(highlight === "PLATE") 
+      plate.material.color.set(0x82E0AA);
     hub.add(plate);
   }
   if (plateType === "DOUBLE" || plateType === "SINGLE") {
     //hubBottomPlate.add(wireframe(hubBottomPlate.geometry));
     //hub.add(hubBottomPlate);
-    const plate = plateObject(4, 0.2, 0xAED6F1, 0.2, scene,numberOfBlades);
+    const plate = plateObject(4, 0.2, 0xAED6F1, 0.2, scene,numberOfBlades,highlight);
     if (assembleHubAndPlate) plate.position.y = -1.02;
     else plate.position.y = -1.7;
+    if(highlight === "PLATE") 
+      plate.material.color.set(0x82E0AA);
     hub.add(plate);
   }
   // if (numberOfBlades >= 1) {
@@ -183,6 +188,8 @@ export function hub(
   //hub.add(clampFront)
   // ======================== Scale Hub Object ========================
   hub.scale.set(1 + weight, 1 + weight, 1 + weight);
+  if(highlight === "HUB") 
+    hub.material.color.set(0x82E0AA);
   return hub;
 }
 

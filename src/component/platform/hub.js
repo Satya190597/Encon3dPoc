@@ -18,6 +18,7 @@ import {
   OverlayTrigger,
   Popover,
   Badge,
+  Accordion,
 } from "react-bootstrap";
 import { blade } from "./objects/bladeObject";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -148,6 +149,10 @@ function Hub() {
 
   const [assembleHubAndPlate, setAssembleHubAndPlate] = useState(false);
 
+  const [openModelDetails, setOpenModelDetails] = useState(false);
+
+  const [highlight, setHighlight] = useState(null);
+
   function showCustomizeOption() {
     setCustomize(true);
   }
@@ -213,6 +218,19 @@ function Hub() {
   function changeHubAndPlateAssembleFlag() {
     setAssembleHubAndPlate(!assembleHubAndPlate);
   }
+  function openModelDetailsFn() {
+    setOpenModelDetails(true);
+  }
+  function closeModelDetails() {
+    setOpenModelDetails(false);
+  }
+
+  function setHighLightFn(name) {
+    setHighlight((value) => {
+      if (value === name) return null;
+      else return name;
+    });
+  }
 
   useEffect(() => {
     render3D();
@@ -231,7 +249,8 @@ function Hub() {
     bladeAngle,
     rpm,
     bladeAxisAngle,
-    assembleHubAndPlate
+    assembleHubAndPlate,
+    highlight,
   ]);
 
   function render3D() {
@@ -245,24 +264,27 @@ function Hub() {
       clampMaterial,
       numberOfBlades,
       scene,
-      assembleHubAndPlate
+      assembleHubAndPlate,
+      highlight
     );
     let bladeModel = blade(bladeMaterial, bladeAngle);
     const bladeA = blade(bladeMaterial, bladeAngle);
     adjustBladeModelPosition(bladeModel);
-    adjustBladeModelPositionX(bladeA)
+    adjustBladeModelPositionX(bladeA);
     if (numberOfBlades >= 1) {
       hubModel.add(bladeModel);
-     
     }
     if (numberOfBlades >= 2) {
       hubModel.add(mirronBaldeModelPosition(bladeModel.clone()));
     }
-    if(numberOfBlades >= 4) {
+    if (numberOfBlades >= 4) {
       hubModel.add(bladeA);
       hubModel.add(mirrionBladeModelPostitionX(bladeA));
     }
-    
+    if (highlight === "BLADE") {
+      bladeModel.material.color.set(0x82e0aa);
+    }
+
     scene.add(hubModel);
 
     const renderer = getRenderer(animation);
@@ -281,29 +303,26 @@ function Hub() {
       hubModel.rotation.y += rpm * 0.01;
       renderer.render(scene, camera);
       //updateWireframePosition(wireframe,hubModel)
-      
     }
     movement(hubModel);
   }
 
-  function updateWireframePosition(wireframe,mesh) {
+  function updateWireframePosition(wireframe, mesh) {
     wireframe.position.copy(mesh.position);
     wireframe.rotation.copy(mesh.rotation);
     wireframe.scale.copy(mesh.scale);
-}
+  }
 
   function adjustBladeModelPositionX(bladeModel) {
     bladeModel.position.set(0, 0, 6);
-    bladeModel.rotation.x =  Math.PI/2; // TODO : Add Balde Rotation
-    bladeModel.rotation.y = -(Math.PI/2)+bladeAxisAngle;
+    bladeModel.rotation.x = Math.PI / 2; // TODO : Add Balde Rotation
+    bladeModel.rotation.y = -(Math.PI / 2) + bladeAxisAngle;
     bladeModel.rotation.z = 0;
   }
 
-
-
   function mirrionBladeModelPostitionX(bladeModel) {
     const blade = bladeModel.clone();
-    blade.position.set(-blade.position.x,-blade.position.y,-blade.position.z);
+    blade.position.set(-blade.position.x, -blade.position.y, -blade.position.z);
     blade.rotation.x = -blade.rotation.x;
     blade.rotation.y = -blade.rotation.y;
     return blade;
@@ -347,7 +366,10 @@ function Hub() {
         <Container>
           <Navbar.Brand href="#">GeoVed 3D Model</Navbar.Brand>
           <Nav className="me-auto">
-            <Button size="lg" onClick={showCustomizeOption}>
+            <Button size="lg" onClick={openModelDetailsFn} className="ms-2">
+              Open Model Details
+            </Button>
+            <Button size="lg" onClick={showCustomizeOption} className="ms-2">
               Customize Hub
             </Button>
             <Button size="lg" onClick={openMaterialTable} className="ms-2">
@@ -707,6 +729,46 @@ function Hub() {
               </tr>
             </tbody>
           </Table>
+        </OffcanvasBody>
+      </Offcanvas>
+      {
+        //=============================================================================
+      }
+      <Offcanvas
+        show={openModelDetails}
+        onHide={closeModelDetails}
+        placement="end"
+      >
+        <OffcanvasHeader closeButton>
+          <h2>Model Details Table</h2>
+        </OffcanvasHeader>
+        <OffcanvasBody>
+          <Accordion>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header onClick={() => setHighLightFn("HUB")}>
+                Hub
+              </Accordion.Header>
+              <Accordion.Body>Hub Details</Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header onClick={() => setHighLightFn("BLADE")}>
+                Blade
+              </Accordion.Header>
+              <Accordion.Body>Blade Details</Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
+              <Accordion.Header onClick={() => setHighLightFn("SCREW")}>
+                Screw
+              </Accordion.Header>
+              <Accordion.Body>Screw Details</Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="3">
+              <Accordion.Header onClick={() => setHighLightFn("PLATE")}>
+                Plate
+              </Accordion.Header>
+              <Accordion.Body>Plate Details</Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
         </OffcanvasBody>
       </Offcanvas>
       <div id="platform3d"></div>

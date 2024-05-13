@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import * as THREE from "three";
 import { CSG } from "three-csg-ts";
-import Config from "../config/modelConfig"
+import Config from "../config/modelConfig";
 import { blade } from "./bladeObject";
-
 
 function getMaterialByColor(color) {
   return new THREE.MeshBasicMaterial({ color });
@@ -55,12 +54,9 @@ function createBlade(length, width, thickness, color) {
 }
 
 function getSpaceBetweenScrews(number) {
-  if(number==1)
-    return 0.05;
-  if(number==2)
-    return 0.1;
-  else
-    return 0.2;
+  if (number == 1) return 0.05;
+  if (number == 2) return 0.1;
+  else return 0.2;
 }
 
 function createOuterSocketsOfPlate(
@@ -69,7 +65,10 @@ function createOuterSocketsOfPlate(
   hubWidth,
   numberOfScrews,
   screwDiameter,
-  thickness
+  thickness,
+  scene,
+  numberOfBlade,
+  highlight
 ) {
   console.log("NUMBER OF SCREWS " + numberOfScrews);
   radius = radius - 0.3;
@@ -78,11 +77,11 @@ function createOuterSocketsOfPlate(
   const arrayOfScrewParallelSocket = [];
   const arrayOfHubScrewSocket = [];
 
-  const holesData = Config.HOLES[4]
+  const holesData = Config.HOLES[4];
 
   const leftHolesData = holesData["LEFT-HOLES"];
-  const rightHolesData = holesData["RIGHT-HOLES"]
-  const distanceBetweenThem = holesData["DISTANCE-BETWEEN-HOLES"]
+  const rightHolesData = holesData["RIGHT-HOLES"];
+  const distanceBetweenThem = holesData["DISTANCE-BETWEEN-HOLES"];
 
   // rightHolesData.forEach(position => {
   //   const screwSocket = createScrew();
@@ -91,24 +90,38 @@ function createOuterSocketsOfPlate(
   //   arrayOfScrewSocket.push(screwSocket);
   // })
 
-
-
   for (let i = 0; i < numberOfScrews; i++) {
     const screwSocket = createScrew(); //getCylinder(screwDiameter, 0.25, 0x000000);
-    const angle = (i+-(getSpaceBetweenScrews(numberOfScrews))) * (360 / numberOfScrews);
+    const angle =
+      (i + -getSpaceBetweenScrews(numberOfScrews)) * (360 / numberOfScrews);
     const x = 0 + radius * Math.cos((angle * Math.PI) / 180);
     const y = 0 + radius * Math.sin((angle * Math.PI) / 180);
     screwSocket.position.set(x, -0.03, y);
-    console.log("RIGHT SCREW AND BOLT X = "+x+" Y = "+(-0.03)+" Z = "+y);
-    console.log("ROTATION = "+screwSocket.rotation.x+" Y = "+screwSocket.rotation.y+" Z = "+screwSocket.rotation.z);
+    console.log(
+      "RIGHT SCREW AND BOLT X = " + x + " Y = " + -0.03 + " Z = " + y
+    );
+    console.log(
+      "ROTATION = " +
+        screwSocket.rotation.x +
+        " Y = " +
+        screwSocket.rotation.y +
+        " Z = " +
+        screwSocket.rotation.z
+    );
+    debugger
+    if (highlight === "SCREW") screwSocket.material.color.set(0x82e0aa);
     arrayOfScrewSocket.push(screwSocket);
     //screwSocket.updateMatrix();
     const screwParallelSocket = createScrew(); //getCylinder(screwDiameter, 0.25, 0x000000);
-    const angleP = (i + getSpaceBetweenScrews(numberOfScrews)) * (360 / numberOfScrews);
+    const angleP =
+      (i + getSpaceBetweenScrews(numberOfScrews)) * (360 / numberOfScrews);
     const xP = 0 + radius * Math.cos((angleP * Math.PI) / 180);
     const yP = 0 + radius * Math.sin((angleP * Math.PI) / 180);
     screwParallelSocket.position.set(xP, -0.03, yP);
-    console.log("LEFT SCREW AND BOLT X = "+xP+" Y = "+(-0.03)+" Z = "+yP);
+    console.log(
+      "LEFT SCREW AND BOLT X = " + xP + " Y = " + -0.03 + " Z = " + yP
+    );
+    if (highlight === "SCREW") screwParallelSocket.material.color.set(0x82e0aa);
     arrayOfScrewParallelSocket.push(screwParallelSocket);
     screwParallelSocket.updateMatrix();
 
@@ -116,8 +129,6 @@ function createOuterSocketsOfPlate(
     // const blade = createBlade(4, 0.2, 0.5, 0xff0000);
     // blade.position.set(x, -0.03, y);
     // cylinder.add(blade)
-    
-
   }
   for (let i = 0; i < 10; i++) {
     const hubScrewSocket = createScrew(); // getCylinder(screwDiameter, 0.25, 0x000000);
@@ -125,12 +136,13 @@ function createOuterSocketsOfPlate(
     const xH = 0 + 1.5 * Math.cos((angleH * Math.PI) / 180);
     const yH = 0 + 1.5 * Math.sin((angleH * Math.PI) / 180);
     hubScrewSocket.position.set(xH, 0.01, yH);
+    if (highlight === "SCREW") hubScrewSocket.material.color.set(0x82e0aa);
     arrayOfHubScrewSocket.push(hubScrewSocket);
   }
   arrayOfScrewSocket.forEach((object) => object.updateMatrix());
   arrayOfScrewParallelSocket.forEach((object) => object.updateMatrix());
   arrayOfHubScrewSocket.forEach((object) => object.updateMatrix());
-  arrayOfScrewSocket.forEach((object,index) => {
+  arrayOfScrewSocket.forEach((object, index) => {
     //cylinder = CSG.subtract(cylinder, object)
     //scene.add(object)
     // if(index <= 4) {
@@ -145,7 +157,7 @@ function createOuterSocketsOfPlate(
     //   bladeModel.position.y += 4
     //   cylinder.add(bladeModel)
     // }
-    
+
     cylinder.add(object);
   });
   cylinder.updateMatrix();
@@ -179,7 +191,8 @@ export function plateObject(
   color,
   hubDiameter,
   scene,
-  numberOfBlades
+  numberOfBlades,
+  highlight
 ) {
   let cylinder = getCylinder(radius, thickness, color);
   cylinder = addSocketForHub(cylinder, hubDiameter);
@@ -191,6 +204,7 @@ export function plateObject(
     0.2,
     thickness,
     scene,
-    numberOfBlades
+    numberOfBlades,
+    highlight
   );
 }
