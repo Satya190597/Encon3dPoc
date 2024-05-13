@@ -283,7 +283,9 @@ function Hub() {
     }
     if (highlight === "BLADE") {
       bladeModel.material.color.set(0x82e0aa);
+      bladeA.material.color.set(0x82e0aa);
     }
+    
 
     scene.add(hubModel);
 
