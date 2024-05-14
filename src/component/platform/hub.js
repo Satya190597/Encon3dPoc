@@ -316,7 +316,7 @@ function Hub() {
   }
 
   function adjustBladeModelPositionX(bladeModel) {
-    bladeModel.position.set(0, 0, 6);
+    bladeModel.position.set(0, 0, 6.6);
     bladeModel.rotation.x = Math.PI / 2; // TODO : Add Balde Rotation
     bladeModel.rotation.y = -(Math.PI / 2) + bladeAxisAngle;
     bladeModel.rotation.z = 0;
@@ -331,14 +331,14 @@ function Hub() {
   }
 
   function adjustBladeModelPosition(bladeModel) {
-    bladeModel.position.set(6, 0, 0);
+    bladeModel.position.set(6.6, 0, 0);
     bladeModel.rotation.x = bladeAxisAngle; // TODO : Add Balde Rotation
     bladeModel.rotation.y = 0;
     bladeModel.rotation.z = -1.6;
   }
 
   function mirronBaldeModelPosition(bladeModel) {
-    bladeModel.position.set(-6, 0, 0);
+    bladeModel.position.set(-6.6, 0, 0);
     bladeModel.rotation.x = bladeAxisAngle; // TODO : Add Balde Rotation
     bladeModel.rotation.y = 3.1;
     bladeModel.rotation.z = -1.6;

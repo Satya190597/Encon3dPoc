@@ -54,9 +54,9 @@ function createBlade(length, width, thickness, color) {
 }
 
 function getSpaceBetweenScrews(number) {
-  if (number == 1) return 0.05;
-  if (number == 2) return 0.1;
-  else return 0.2;
+  if (number == 1) return 0.03;
+  if (number == 2) return 0.06;
+  else return 0.15;
 }
 
 function createOuterSocketsOfPlate(
