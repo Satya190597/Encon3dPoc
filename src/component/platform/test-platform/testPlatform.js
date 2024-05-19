@@ -19,37 +19,134 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getScrewObject } from "../objects/screw";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
+import { raycasting } from "../util/raycasting";
+import HEXA_COLOR from "../util/colors";
+import DraggableWindow from "../ui/draggableWindow";
+
+const TOP_PLATE_MODEL = "models/topPlate.json";
+const HUB_MODEL = "models/hub.json";
+const BOTTOM_PLATE_MODEL = "models/bottomPlate.json";
+const BLADE_1 =  "models/eight_blades/blade1.json";
+const BLADE_2 =  "models/eight_blades/blade2.json";
+const BLADE_3 =  "models/eight_blades/blade3.json";
+const BLADE_4 =  "models/eight_blades/blade4.json";
+const BLADE_5 =  "models/eight_blades/blade5.json";
+const BLADE_6 =  "models/eight_blades/blade6.json";
+const BLADE_7 =  "models/eight_blades/blade7.json";
+const BLADE_8 =  "models/eight_blades/blade8.json";
+
 
 function TestPlatform() {
+  const listOfModelObject = [];
+  var previousObject = useRef(null);
+  const [openModel, setOpenModel] = useState(false);
+  const [modelData, setModelData] = useState(null);
+  const [previousModelObject, setPreviousModelObject] = useState(null);
+
+  const setPreviousObject = (value) => (previousObject.current = value);
   useEffect(() => {
     render3D();
   }, []);
+
+  function modelLoadingProgress(xhr, name) {
+    console.log(name + " : " + (xhr.loaded / xhr.total) * 100 + "% loaded");
+  }
+
+  function errorHandling(error, name) {
+    console.log(name + " : " + error);
+  }
+
+  function loadObject(loader, fileNames, index, object, scene) {
+    if (fileNames.length === index) {
+      for (let i = 0; i < listOfModelObject.length; i++) {
+        object.add(listOfModelObject[i]);
+      }
+      scene.add(object);
+      attachMovement(object);
+      return;
+    }
+    if (object != null) {
+      listOfModelObject.push(object);
+      console.log(object.name);
+    }
+    loadModelObjects(loader, fileNames, index, object, scene);
+  }
+
+  function loadModelObjects(loader, fileNames, index, parentObject, scene) {
+    loader.load(
+      fileNames[index],
+      (object) => loadObject(loader, fileNames, index + 1, object, scene),
+      (xhr) => modelLoadingProgress(xhr, fileNames[index]),
+      (error) => errorHandling(error)
+    );
+  }
+
+  function attachMovement(model) {
+    // Add User Control To The Model To See The Model In 360 View.
+    movement(model);
+  }
+
   function render3D() {
     // Step 1: Get a camera object.
-    const camera = getCamera(70);
+    const camera = getCamera(10);
     // Step 2: Get a scene object.
     const scene = getScene();
     // Step 3: Get a renderer object.
     const renderer = getRenderer(animation);
     // Step 4: Add renderer DOM to the actual DOM.
     addRenderer(document.getElementById("platform3d"), renderer);
-    // Step 5: Get a model object.
-    const model = getScrewObject(20,3);
-    // Step 6: Set model object to the scene.
-
-    scene.add(model);
+    // Step 5: Load models object.
+    const loader = new THREE.ObjectLoader();
+    loadModelObjects(
+      loader,
+      [TOP_PLATE_MODEL, BOTTOM_PLATE_MODEL,BLADE_1,BLADE_2,BLADE_3,BLADE_4,BLADE_5,BLADE_6,BLADE_7,BLADE_8, HUB_MODEL],
+      0,
+      null,
+      scene
+    );
+    // Step 6: Setup Ray Caster.
+    var raycaster = new THREE.Raycaster();
+    var mouse = new THREE.Vector2();
+    renderer.domElement.addEventListener(
+      "dblclick",
+      (event) => {
+        clearPreviousObject();
+        raycasting(
+          raycaster,
+          event,
+          scene,
+          mouse,
+          camera,
+          setPreviousObject,
+          setOpenModel,
+          setModelData
+        );
+      },
+      false
+    );
 
     // Animation Function.
     function animation(time) {
       renderer.render(scene, camera);
     }
-    // Add User Control To The Model To See The Model In 360 View.
-    movement(model);
+  }
+  function clearPreviousObject() {
+    if (previousObject.current === null || previousObject.current === undefined)
+      return;
+    previousObject.current["MODEL_OBJECT"].material.color.set(
+      HEXA_COLOR[previousObject.current["COLOR"]]
+    );
+  }
+
+  function closeWindow() {
+    clearPreviousObject();
+    setOpenModel(false);
   }
 
   return (
     <>
+      {openModel && <DraggableWindow data={modelData} close={closeWindow} />}
       <div id="platform3d"></div>
     </>
   );

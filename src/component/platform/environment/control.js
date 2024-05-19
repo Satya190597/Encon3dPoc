@@ -4,7 +4,7 @@ export function movement(object) {
     x: 0,
     y: 0,
   };
-  document.addEventListener("mousedown", (event) => {
+  document.getElementById("platform3d").addEventListener("mousedown", (event) => {
     isDragging = true;
     previousMousePosition = {
       x: event.clientX,
@@ -12,11 +12,11 @@ export function movement(object) {
     };
   });
 
-  document.addEventListener("mouseup", () => {
+  document.getElementById("platform3d").addEventListener("mouseup", () => {
     isDragging = false;
   });
 
-  document.addEventListener("mousemove", (event) => {
+  document.getElementById("platform3d").addEventListener("mousemove", (event) => {
     if (isDragging) {
       const deltaMove = {
         x: event.clientX - previousMousePosition.x,
