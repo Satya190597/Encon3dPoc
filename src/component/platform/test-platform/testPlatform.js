@@ -27,15 +27,32 @@ import DraggableWindow from "../ui/draggableWindow";
 const TOP_PLATE_MODEL = "models/topPlate.json";
 const HUB_MODEL = "models/hub.json";
 const BOTTOM_PLATE_MODEL = "models/bottomPlate.json";
-const BLADE_1 =  "models/eight_blades/blade1.json";
-const BLADE_2 =  "models/eight_blades/blade2.json";
-const BLADE_3 =  "models/eight_blades/blade3.json";
-const BLADE_4 =  "models/eight_blades/blade4.json";
-const BLADE_5 =  "models/eight_blades/blade5.json";
-const BLADE_6 =  "models/eight_blades/blade6.json";
-const BLADE_7 =  "models/eight_blades/blade7.json";
-const BLADE_8 =  "models/eight_blades/blade8.json";
-
+const BLADE_1 = "models/eight_blades/blade1.json";
+const BLADE_2 = "models/eight_blades/blade2.json";
+const BLADE_3 = "models/eight_blades/blade3.json";
+const BLADE_4 = "models/eight_blades/blade4.json";
+const BLADE_5 = "models/eight_blades/blade5.json";
+const BLADE_6 = "models/eight_blades/blade6.json";
+const BLADE_7 = "models/eight_blades/blade7.json";
+const BLADE_8 = "models/eight_blades/blade8.json";
+const CLAMP3 = [
+  "models/clamps/eight_blades_clamps/clamp3_b1.json",
+  "models/clamps/eight_blades_clamps/clamp3_b2.json",
+  "models/clamps/eight_blades_clamps/clamp3_t1.json",
+  "models/clamps/eight_blades_clamps/clamp3_t2.json",
+];
+const CLAMP4 = [
+  "models/clamps/eight_blades_clamps/clamp4_b1.json",
+  "models/clamps/eight_blades_clamps/clamp4_b2.json",
+  "models/clamps/eight_blades_clamps/clamp4_t1.json",
+  "models/clamps/eight_blades_clamps/clamp4_t2.json",
+];
+const CLAMP2 = [
+  "models/clamps/eight_blades_clamps/clamp2_b1.json",
+  "models/clamps/eight_blades_clamps/clamp2_b2.json",
+  "models/clamps/eight_blades_clamps/clamp2_t1.json",
+  "models/clamps/eight_blades_clamps/clamp2_t2.json",
+];
 
 function TestPlatform() {
   const listOfModelObject = [];
@@ -64,6 +81,7 @@ function TestPlatform() {
       }
       scene.add(object);
       attachMovement(object);
+      console.log(JSON.stringify(object));
       return;
     }
     if (object != null) {
@@ -100,7 +118,22 @@ function TestPlatform() {
     const loader = new THREE.ObjectLoader();
     loadModelObjects(
       loader,
-      [TOP_PLATE_MODEL, BOTTOM_PLATE_MODEL,BLADE_1,BLADE_2,BLADE_3,BLADE_4,BLADE_5,BLADE_6,BLADE_7,BLADE_8, HUB_MODEL],
+      [
+        TOP_PLATE_MODEL,
+        BOTTOM_PLATE_MODEL,
+        BLADE_1,
+        BLADE_2,
+        BLADE_3,
+        BLADE_4,
+        BLADE_5,
+        BLADE_6,
+        BLADE_7,
+        BLADE_8,
+        ...CLAMP2,
+        ...CLAMP3,
+        ...CLAMP4,
+        HUB_MODEL,
+      ],
       0,
       null,
       scene

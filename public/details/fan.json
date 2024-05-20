@@ -1,22 +1,27 @@
 {
-	"SCREW": {
-		"TITLE": "SCREW",
-		"DETAILS": "A screw is a fastener with a helical ridge, known as a thread, wrapped around a cylindrical shaft. It is used to join materials together by being rotated into a pre-drilled hole or directly into the material, providing secure attachment through its threading.",
-		"IMAGE": "https://5.imimg.com/data5/SELLER/Default/2021/4/FU/CQ/KI/43600785/fan-bolt-nut-500x500.jpg"
-	},
-    "HUB": {
-        "TITLE": "HUB",
-		"DETAILS": "A hub is a central network device that connects multiple devices, enabling communication. It operates at the physical layer, broadcasting data to all connected devices. Unlike a switch, it doesn't filter or direct data, making it less efficient for managing network traffic.",
-		"IMAGE": "https://5.imimg.com/data5/SELLER/Default/2022/12/IK/UI/AL/92303816/industrial-colling-fan-hub.jpg"
-    },
-    "PLATE": {
-        "TITLE": "PLATE",
-		"DETAILS": "An industrial fan plate, also known as a mounting plate or fan plate, is a flat metal component used to securely attach an industrial fan to a structure. It ensures stability and proper alignment, aiding in efficient air circulation within industrial environments.",
-		"IMAGE": "https://5.imimg.com/data5/SELLER/Default/2024/3/396504266/MU/ZH/UQ/20705531/fan-top-cover-1691823901588.jpeg"
-    },
-	"BLADE": {
-        "TITLE": "BLADE",
-		"DETAILS": "An industrial fan blade is a component designed to move air efficiently in large-scale environments. Made from materials like metal or reinforced plastic, these blades are engineered for durability and optimal airflow, essential for ventilation, cooling, and maintaining air quality in industrial settings.",
-		"IMAGE": "https://5.imimg.com/data5/QG/PG/MY-8674863/industrial-aluminum-fan-blades.jpg"
-    }
+  "SCREW": {
+    "TITLE": "SCREW",
+    "DETAILS": "A screw is a fastener with a helical ridge, known as a thread, wrapped around a cylindrical shaft. It is used to join materials together by being rotated into a pre-drilled hole or directly into the material, providing secure attachment through its threading.",
+    "IMAGE": "https://5.imimg.com/data5/SELLER/Default/2021/4/FU/CQ/KI/43600785/fan-bolt-nut-500x500.jpg"
+  },
+  "HUB": {
+    "TITLE": "HUB",
+    "DETAILS": "A hub is a central network device that connects multiple devices, enabling communication. It operates at the physical layer, broadcasting data to all connected devices. Unlike a switch, it doesn't filter or direct data, making it less efficient for managing network traffic.",
+    "IMAGE": "https://5.imimg.com/data5/SELLER/Default/2022/12/IK/UI/AL/92303816/industrial-colling-fan-hub.jpg"
+  },
+  "PLATE": {
+    "TITLE": "PLATE",
+    "DETAILS": "An industrial fan plate, also known as a mounting plate or fan plate, is a flat metal component used to securely attach an industrial fan to a structure. It ensures stability and proper alignment, aiding in efficient air circulation within industrial environments.",
+    "IMAGE": "https://5.imimg.com/data5/SELLER/Default/2024/3/396504266/MU/ZH/UQ/20705531/fan-top-cover-1691823901588.jpeg"
+  },
+  "BLADE": {
+    "TITLE": "BLADE",
+    "DETAILS": "An industrial fan blade is a component designed to move air efficiently in large-scale environments. Made from materials like metal or reinforced plastic, these blades are engineered for durability and optimal airflow, essential for ventilation, cooling, and maintaining air quality in industrial settings.",
+    "IMAGE": "https://5.imimg.com/data5/QG/PG/MY-8674863/industrial-aluminum-fan-blades.jpg"
+  },
+  "CLAMP": {
+    "TITLE": "CLAMP",
+    "DETAILS": "An industrial fan clamp is a device used to secure fan components, such as blades or ducts, in place. It ensures stability and safety by preventing movement during operation. Made from robust materials, these clamps are essential for maintaining the efficiency and reliability of industrial ventilation systems.",
+    "IMAGE": "https://m.media-amazon.com/images/I/41sZQUAPf9L._AC_UF1000,1000_QL80_.jpg"
+  }
 }

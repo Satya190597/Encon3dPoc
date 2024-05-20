@@ -27,6 +27,10 @@ function DraggableWindow({ data, close }) {
           setDetails(result["BLADE"]["DETAILS"]);
           setImage(result["BLADE"]["IMAGE"]);
         }
+        else if (data.title.toLowerCase() === "clamp") {
+          setDetails(result["CLAMP"]["DETAILS"]);
+          setImage(result["CLAMP"]["IMAGE"]);
+        }
       })
       .catch((error) => {
         console.log(error);

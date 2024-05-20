@@ -31,6 +31,7 @@ function getTitle(name) {
   if (name.includes("BLADE_")) return "Blade";
   if (name.includes("BACK_HOLDER")) return "Blade";
   if (name.includes("_CLAMP")) return "Blade";
+  if (name.includes("CLAMP")) return "Clamp";
   return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 }
 
@@ -74,6 +75,7 @@ function highLightObject(object, setPreviousObject) {
     });
     bladeSurfaceObject.material.color.set(0xe74c3c);
   } else {
+    console.log(object.material.color.getHexString());
     setPreviousObject({
       MODEL_OBJECT: object,
       COLOR: object.material.color.getHexString(),
