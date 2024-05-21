@@ -1,0 +1,35 @@
+{
+	"metadata": {
+		"version": 4.6,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "d643a289-443f-4873-b940-44a62450b9c7",
+			"type": "BoxGeometry",
+			"width": 1,
+			"height": 1,
+			"depth": 1,
+			"widthSegments": 1,
+			"heightSegments": 1,
+			"depthSegments": 1
+		}],
+	"materials": [
+		{
+			"uuid": "df008c15-99ce-47b4-9f01-a00e06adcb39",
+			"type": "MeshMatcapMaterial",
+			"color": 1151122,
+			"blendColor": 0
+		}],
+	"object": {
+		"uuid": "fa8824df-339b-40cc-b934-0d2f06ce62e0",
+		"type": "Mesh",
+		"name": "CLAMP6_B1",
+		"layers": 1,
+		"matrix": [-0.9455803499406052,-4.582010032104715e-17,1.0077981055190641,0,-7.559239879024516e-17,0.9021119141343739,-2.9910582615111614e-17,0,-0.29998666780855116,-3.4469716112913136e-17,-0.2814665921383398,0,2.5943683314027823,-0.4900727465714132,2.627398746506878,1],
+		"up": [0,1,0],
+		"geometry": "d643a289-443f-4873-b940-44a62450b9c7",
+		"material": "df008c15-99ce-47b4-9f01-a00e06adcb39"
+	}
+}

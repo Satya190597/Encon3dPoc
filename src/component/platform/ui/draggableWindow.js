@@ -3,12 +3,14 @@ import Nav from "react-bootstrap/Nav";
 import CloseButton from "react-bootstrap/CloseButton";
 import Image from "react-bootstrap/Image";
 import Table from "react-bootstrap/Table";
+import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useEffect, useState } from "react";
 function DraggableWindow({ data, close }) {
   const [details, setDetails] = useState();
   const [image, setImage] = useState();
+  const [material, setMaterial] = useState([]);
   useEffect(() => {
     fetch("details/fan.json")
       .then((response) => response.json())
@@ -22,12 +24,14 @@ function DraggableWindow({ data, close }) {
         } else if (data.title.toLowerCase() === "plate") {
           setDetails(result["PLATE"]["DETAILS"]);
           setImage(result["PLATE"]["IMAGE"]);
-        }
-        else if (data.title.toLowerCase() === "blade") {
+        } else if (data.title.toLowerCase() === "blade") {
           setDetails(result["BLADE"]["DETAILS"]);
           setImage(result["BLADE"]["IMAGE"]);
-        }
-        else if (data.title.toLowerCase() === "clamp") {
+          debugger;
+          if (result["BLADE"]["MATERIAL"]) {
+            setMaterial(result["BLADE"]["MATERIAL"]);
+          }
+        } else if (data.title.toLowerCase() === "clamp") {
           setDetails(result["CLAMP"]["DETAILS"]);
           setImage(result["CLAMP"]["IMAGE"]);
         }
@@ -105,6 +109,12 @@ function DraggableWindow({ data, close }) {
           </tr>
         </tbody>
       </Table>
+      <label>Select Material</label>
+      <Form.Select>
+        {material.map((element) => {
+          return <option value={element}>{element}</option>;
+        })}
+      </Form.Select>
     </div>
   );
 }

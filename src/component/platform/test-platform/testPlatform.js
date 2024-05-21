@@ -53,6 +53,24 @@ const CLAMP2 = [
   "models/clamps/eight_blades_clamps/clamp2_t1.json",
   "models/clamps/eight_blades_clamps/clamp2_t2.json",
 ];
+const CLAMP5 = [
+  "models/clamps/eight_blades_clamps/clamp5_b1.json",
+  "models/clamps/eight_blades_clamps/clamp5_b2.json",
+  "models/clamps/eight_blades_clamps/clamp5_t1.json",
+  "models/clamps/eight_blades_clamps/clamp5_t2.json",
+];
+const CLAMP1 = [
+  "models/clamps/eight_blades_clamps/clamp1_b1.json",
+  "models/clamps/eight_blades_clamps/clamp1_b2.json",
+  "models/clamps/eight_blades_clamps/clamp1_t1.json",
+  "models/clamps/eight_blades_clamps/clamp1_t2.json",
+];
+const CLAMP6 = [
+  "models/clamps/eight_blades_clamps/clamp6_b1.json",
+  "models/clamps/eight_blades_clamps/clamp6_b2.json",
+  "models/clamps/eight_blades_clamps/clamp6_t1.json",
+  "models/clamps/eight_blades_clamps/clamp6_t2.json",
+]
 
 function TestPlatform() {
   const listOfModelObject = [];
@@ -132,6 +150,9 @@ function TestPlatform() {
         ...CLAMP2,
         ...CLAMP3,
         ...CLAMP4,
+        ...CLAMP5,
+        ...CLAMP1,
+        ...CLAMP6,
         HUB_MODEL,
       ],
       0,

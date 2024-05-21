@@ -17,7 +17,8 @@
   "BLADE": {
     "TITLE": "BLADE",
     "DETAILS": "An industrial fan blade is a component designed to move air efficiently in large-scale environments. Made from materials like metal or reinforced plastic, these blades are engineered for durability and optimal airflow, essential for ventilation, cooling, and maintaining air quality in industrial settings.",
-    "IMAGE": "https://5.imimg.com/data5/QG/PG/MY-8674863/industrial-aluminum-fan-blades.jpg"
+    "IMAGE": "https://5.imimg.com/data5/QG/PG/MY-8674863/industrial-aluminum-fan-blades.jpg",
+    "MATERIAL": ["Steel", "Carbon Fiber"]
   },
   "CLAMP": {
     "TITLE": "CLAMP",

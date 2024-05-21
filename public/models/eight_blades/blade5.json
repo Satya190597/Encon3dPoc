@@ -1,114 +1,123 @@
 {
-	"metadata": {
-		"version": 4.6,
-		"type": "Object",
-		"generator": "Object3D.toJSON"
-	},
-	"geometries": [
-		{
-			"uuid": "936f4801-1bce-4662-bb3f-efdde19f2f95",
-			"type": "CylinderGeometry",
-			"radiusTop": 0.4,
-			"radiusBottom": 0.7,
-			"height": 5.5,
-			"radialSegments": 2,
-			"heightSegments": 1,
-			"openEnded": false,
-			"thetaStart": 0,
-			"thetaLength": 6.283185307179586
-		},
-		{
-			"uuid": "999a4b0f-f291-4d19-9053-819ee74241f3",
-			"type": "CylinderGeometry",
-			"radiusTop": 0.5,
-			"radiusBottom": 0.5,
-			"height": 0.2,
-			"radialSegments": 32,
-			"heightSegments": 1,
-			"openEnded": false,
-			"thetaStart": 0,
-			"thetaLength": 6.283185307179586
-		},
-		{
-			"uuid": "663deb16-a272-4cd2-9020-c9ac22d355ef",
-			"type": "CylinderGeometry",
-			"radiusTop": 0.3,
-			"radiusBottom": 0.3,
-			"height": 0.5,
-			"radialSegments": 32,
-			"heightSegments": 1,
-			"openEnded": false,
-			"thetaStart": 0,
-			"thetaLength": 6.283185307179586
-		}],
-	"materials": [
-		{
-			"uuid": "f9d63511-53a6-4ac8-8db2-51fe785e010a",
-			"type": "MeshBasicMaterial",
-			"color": 16777215,
-			"envMapRotation": [0,0,0,
-				"XYZ"],
-			"reflectivity": 1,
-			"refractionRatio": 0.98,
-			"blendColor": 0
-		},
-		{
-			"uuid": "43c0894b-2605-41e7-b118-22d5e0e359c2",
-			"type": "MeshMatcapMaterial",
-			"color": 9368827,
-			"blendColor": 0
-		},
-		{
-			"uuid": "111b6beb-f20e-4610-9dbb-9a55f330b53f",
-			"type": "MeshMatcapMaterial",
-			"color": 3980759,
-			"blendColor": 0
-		},
-		{
-			"uuid": "b71b2dd4-a619-48a4-a00b-37e08c597282",
-			"type": "MeshMatcapMaterial",
-			"color": 7393982,
-			"blendColor": 0
-		}],
-	"object": {
-		"uuid": "0f45d0d8-1ea0-4031-9fcc-dbf93d0ed1d7",
-		"type": "Mesh",
-		"name": "BLADE_5",
-		"layers": 1,
-		"matrix": [-2.220446049250313e-16,-1,-4.440892098500626e-16,0,-0.7110583322733854,6.661338147750939e-16,-0.7031330230508247,0,0.7031330230508247,1.1102230246251565e-16,-0.7110583322733852,0,-4.417714475464378,0.029203018099660305,-4.3831471376193365,1],
-		"up": [0,1,0],
-		"geometry": "936f4801-1bce-4662-bb3f-efdde19f2f95",
-		"material": "f9d63511-53a6-4ac8-8db2-51fe785e010a",
-		"children": [
-			{
-				"uuid": "c6f8c681-f848-40f6-8fa0-505fc41b814b",
-				"type": "Mesh",
-				"name": "BLADE5_SURFACE",
-				"layers": 1,
-				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
-				"up": [0,1,0],
-				"geometry": "936f4801-1bce-4662-bb3f-efdde19f2f95",
-				"material": "43c0894b-2605-41e7-b118-22d5e0e359c2"
-			},
-			{
-				"uuid": "2fb2fddb-66d3-4f65-8288-4bffbef0a9c5",
-				"type": "Mesh",
-				"name": "BLADE5_BACK_HOLDER",
-				"layers": 1,
-				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.002531965449822593,-2.962049494293373,0,1],
-				"up": [0,1,0],
-				"geometry": "999a4b0f-f291-4d19-9053-819ee74241f3",
-				"material": "111b6beb-f20e-4610-9dbb-9a55f330b53f"
-			},
-			{
-				"uuid": "223a4fe8-e335-4b04-824e-0deded9fc51e",
-				"type": "Mesh",
-				"name": "BLADE5_CLAMP",
-				"layers": 1,
-				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,-2.8,0,1],
-				"up": [0,1,0],
-				"geometry": "663deb16-a272-4cd2-9020-c9ac22d355ef",
-				"material": "b71b2dd4-a619-48a4-a00b-37e08c597282"
-			}]
-	}
+  "metadata": {
+    "version": 4.6,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+  },
+  "geometries": [
+    {
+      "uuid": "936f4801-1bce-4662-bb3f-efdde19f2f95",
+      "type": "CylinderGeometry",
+      "radiusTop": 0.4,
+      "radiusBottom": 0.7,
+      "height": 5.5,
+      "radialSegments": 2,
+      "heightSegments": 1,
+      "openEnded": false,
+      "thetaStart": 0,
+      "thetaLength": 6.283185307179586
+    },
+    {
+      "uuid": "999a4b0f-f291-4d19-9053-819ee74241f3",
+      "type": "CylinderGeometry",
+      "radiusTop": 0.5,
+      "radiusBottom": 0.5,
+      "height": 0.2,
+      "radialSegments": 32,
+      "heightSegments": 1,
+      "openEnded": false,
+      "thetaStart": 0,
+      "thetaLength": 6.283185307179586
+    },
+    {
+      "uuid": "663deb16-a272-4cd2-9020-c9ac22d355ef",
+      "type": "CylinderGeometry",
+      "radiusTop": 0.3,
+      "radiusBottom": 0.3,
+      "height": 0.5,
+      "radialSegments": 32,
+      "heightSegments": 1,
+      "openEnded": false,
+      "thetaStart": 0,
+      "thetaLength": 6.283185307179586
+    }
+  ],
+  "materials": [
+    {
+      "uuid": "f9d63511-53a6-4ac8-8db2-51fe785e010a",
+      "type": "MeshBasicMaterial",
+      "color": 16777215,
+      "envMapRotation": [0, 0, 0, "XYZ"],
+      "reflectivity": 1,
+      "refractionRatio": 0.98,
+      "blendColor": 0
+    },
+    {
+      "uuid": "43c0894b-2605-41e7-b118-22d5e0e359c2",
+      "type": "MeshMatcapMaterial",
+      "color": 9368827,
+      "blendColor": 0
+    },
+    {
+      "uuid": "111b6beb-f20e-4610-9dbb-9a55f330b53f",
+      "type": "MeshMatcapMaterial",
+      "color": 3980759,
+      "blendColor": 0
+    },
+    {
+      "uuid": "b71b2dd4-a619-48a4-a00b-37e08c597282",
+      "type": "MeshMatcapMaterial",
+      "color": 7393982,
+      "blendColor": 0
+    }
+  ],
+  "object": {
+    "uuid": "0f45d0d8-1ea0-4031-9fcc-dbf93d0ed1d7",
+    "type": "Mesh",
+    "name": "BLADE_5",
+    "layers": 1,
+    "matrix": [
+      -4.440892098500626e-16, -1, -6.661338147750939e-16, 0,
+      -0.7110583322733854, 6.661338147750938e-16, -0.7031330230508247, 0,
+      0.7031330230508247, 1.6653345369377343e-16, -0.7110583322733854, 0,
+      -4.898830632087925, 0.029203018099660305, -4.861868348483156, 1
+    ],
+    "up": [0, 1, 0],
+    "geometry": "936f4801-1bce-4662-bb3f-efdde19f2f95",
+    "material": "f9d63511-53a6-4ac8-8db2-51fe785e010a",
+    "children": [
+      {
+        "uuid": "c6f8c681-f848-40f6-8fa0-505fc41b814b",
+        "type": "Mesh",
+        "name": "BLADE5_SURFACE",
+        "layers": 1,
+        "matrix": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+        "up": [0, 1, 0],
+        "geometry": "936f4801-1bce-4662-bb3f-efdde19f2f95",
+        "material": "43c0894b-2605-41e7-b118-22d5e0e359c2"
+      },
+      {
+        "uuid": "2fb2fddb-66d3-4f65-8288-4bffbef0a9c5",
+        "type": "Mesh",
+        "name": "BLADE5_BACK_HOLDER",
+        "layers": 1,
+        "matrix": [
+          1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0.002531965449822593, -4.09, 0, 1
+        ],
+        "up": [0, 1, 0],
+        "geometry": "999a4b0f-f291-4d19-9053-819ee74241f3",
+        "material": "111b6beb-f20e-4610-9dbb-9a55f330b53f"
+      },
+      {
+        "uuid": "223a4fe8-e335-4b04-824e-0deded9fc51e",
+        "type": "Mesh",
+        "name": "BLADE5_CLAMP",
+        "layers": 1,
+        "matrix": [1, 0, 0, 0, 0, 2.905, 0, 0, 0, 0, 1, 0, 0, -3.344, 0, 1],
+        "up": [0, 1, 0],
+        "geometry": "663deb16-a272-4cd2-9020-c9ac22d355ef",
+        "material": "b71b2dd4-a619-48a4-a00b-37e08c597282"
+      }
+    ]
+  }
 }
