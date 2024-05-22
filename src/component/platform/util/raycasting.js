@@ -51,6 +51,7 @@ function highLightObject(object, setPreviousObject) {
       }
     }
     if (bladeSurfaceObject === null) return;
+    console.log(bladeSurfaceObject.material.color.getHexString());
     setPreviousObject({
       MODEL_OBJECT: bladeSurfaceObject,
       COLOR: bladeSurfaceObject.material.color.getHexString(),

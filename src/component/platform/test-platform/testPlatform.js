@@ -70,7 +70,7 @@ const CLAMP6 = [
   "models/clamps/eight_blades_clamps/clamp6_b2.json",
   "models/clamps/eight_blades_clamps/clamp6_t1.json",
   "models/clamps/eight_blades_clamps/clamp6_t2.json",
-]
+];
 
 function TestPlatform() {
   const listOfModelObject = [];
@@ -193,6 +193,21 @@ function TestPlatform() {
     );
   }
 
+  function changeColor(objectName, colorName) {
+    debugger;
+    previousObject.current["MODEL_OBJECT"].material.color.set(
+      getColor(colorName)
+    );
+  }
+
+  function getColor(colorName) {
+    if (colorName === "Carbon Fiber") {
+      return 0x8e44ad;
+    } else {
+      return 0x8ef4fb;
+    }
+  }
+
   function closeWindow() {
     clearPreviousObject();
     setOpenModel(false);
@@ -200,7 +215,13 @@ function TestPlatform() {
 
   return (
     <>
-      {openModel && <DraggableWindow data={modelData} close={closeWindow} />}
+      {openModel && (
+        <DraggableWindow
+          data={modelData}
+          close={closeWindow}
+          changeColor={changeColor}
+        />
+      )}
       <div id="platform3d"></div>
     </>
   );

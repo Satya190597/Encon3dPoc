@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useEffect, useState } from "react";
-function DraggableWindow({ data, close }) {
+function DraggableWindow({ data, close, changeColor }) {
   const [details, setDetails] = useState();
   const [image, setImage] = useState();
   const [material, setMaterial] = useState([]);
@@ -109,8 +109,15 @@ function DraggableWindow({ data, close }) {
           </tr>
         </tbody>
       </Table>
+      <br />
       <label>Select Material</label>
-      <Form.Select>
+      <br/>
+      <Form.Select
+        onChange={(event) => {
+          debugger;
+          changeColor(data.title.toUpperCase() + "_", event.target.value);
+        }}
+      >
         {material.map((element) => {
           return <option value={element}>{element}</option>;
         })}
