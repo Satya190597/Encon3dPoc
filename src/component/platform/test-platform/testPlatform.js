@@ -23,6 +23,7 @@ import { useEffect, useState, useRef } from "react";
 import { raycasting } from "../util/raycasting";
 import HEXA_COLOR from "../util/colors";
 import DraggableWindow from "../ui/draggableWindow";
+import Header from "../ui/header";
 
 const TOP_PLATE_MODEL = "models/topPlate.json";
 const HUB_MODEL = "models/hub.json";
@@ -71,12 +72,25 @@ const CLAMP6 = [
   "models/clamps/eight_blades_clamps/clamp6_t1.json",
   "models/clamps/eight_blades_clamps/clamp6_t2.json",
 ];
+const CLAMP7 = [
+  "models/clamps/eight_blades_clamps/clamp7_b1.json",
+  "models/clamps/eight_blades_clamps/clamp7_b2.json",
+  "models/clamps/eight_blades_clamps/clamp7_t1.json",
+  "models/clamps/eight_blades_clamps/clamp7_t2.json",
+];
+const CLAMP8 = [
+  "models/clamps/eight_blades_clamps/clamp8_b1.json",
+  "models/clamps/eight_blades_clamps/clamp8_b2.json",
+  "models/clamps/eight_blades_clamps/clamp8_t1.json",
+  "models/clamps/eight_blades_clamps/clamp8_t2.json",
+];
 
 function TestPlatform() {
   const listOfModelObject = [];
   var previousObject = useRef(null);
   const [openModel, setOpenModel] = useState(false);
   const [modelData, setModelData] = useState(null);
+  const [rendererObject,setRendererObject] = useState(null);
   const [previousModelObject, setPreviousModelObject] = useState(null);
 
   const setPreviousObject = (value) => (previousObject.current = value);
@@ -153,6 +167,8 @@ function TestPlatform() {
         ...CLAMP5,
         ...CLAMP1,
         ...CLAMP6,
+        ...CLAMP7,
+        ...CLAMP8,
         HUB_MODEL,
       ],
       0,
@@ -179,6 +195,8 @@ function TestPlatform() {
       },
       false
     );
+
+    setRendererObject(renderer);
 
     // Animation Function.
     function animation(time) {
@@ -213,6 +231,15 @@ function TestPlatform() {
     setOpenModel(false);
   }
 
+  function exportFn() {
+    if (!rendererObject) return;
+    var imageData = rendererObject.domElement.toDataURL();
+    const tempLink = document.createElement("a");
+    tempLink.href = imageData;
+    tempLink.setAttribute("download", "drawing.png");
+    tempLink.click();
+  }
+
   return (
     <>
       {openModel && (
@@ -222,6 +249,7 @@ function TestPlatform() {
           changeColor={changeColor}
         />
       )}
+      {/* <Header exportFn={exportFn} /> */}
       <div id="platform3d"></div>
     </>
   );
