@@ -29,6 +29,8 @@ import Loaders from "../util/loading";
 const TOP_PLATE_MODEL = "models/topPlate.json";
 const HUB_MODEL = "models/hub.json";
 const BOTTOM_PLATE_MODEL = "models/bottomPlate.json";
+const TOP_PLATE_MODEL_4 = "models/topPlateF002.json";
+const BOTTOM_PLATE_MODEL_4 = "models/bottomPlateF002.json";
 const BLADE_1 = "models/eight_blades/blade1.json";
 const BLADE_2 = "models/eight_blades/blade2.json";
 const BLADE_3 = "models/eight_blades/blade3.json";
@@ -93,11 +95,9 @@ function TestPlatform() {
   const [modelData, setModelData] = useState(null);
   const [rendererObject, setRendererObject] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [previousModelObject, setPreviousModelObject] = useState(null);
 
   const setPreviousObject = (value) => (previousObject.current = value);
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
     render3D();
   }, []);
 
@@ -105,13 +105,27 @@ function TestPlatform() {
     console.log(name + " : " + (xhr.loaded / xhr.total) * 100 + "% loaded");
   }
 
+  function getFanId() {
+    return new URLSearchParams(window.location.search).get("fanModelID");
+  }
+
   function errorHandling(error, name) {
     console.log(name + " : " + error);
+  }
+
+  function setInitialMaterial(object) {
+    debugger;
+    if (
+      (object.name === "TOP_PLATE" || object.name === "BOTTOM_PLATE") &&
+      getFanId() === "FAN-003"
+    )
+      object.material.color.set(0xbb8fce);
   }
 
   function loadObject(loader, fileNames, index, object, scene) {
     if (fileNames.length === index) {
       for (let i = 0; i < listOfModelObject.length; i++) {
+        setInitialMaterial(listOfModelObject[i]);
         object.add(listOfModelObject[i]);
       }
       scene.add(object);
@@ -141,6 +155,42 @@ function TestPlatform() {
     movement(model);
   }
 
+  function loadPlates() {
+    if (getFanId() === "FAN-001") return [BOTTOM_PLATE_MODEL];
+    if (getFanId() === "FAN-002")
+      return [TOP_PLATE_MODEL_4, BOTTOM_PLATE_MODEL_4];
+    return [TOP_PLATE_MODEL, BOTTOM_PLATE_MODEL];
+  }
+
+  function getBlades() {
+    if (getFanId() === "FAN-002") return [BLADE_1, BLADE_2, BLADE_3, BLADE_4];
+    return [
+      BLADE_1,
+      BLADE_2,
+      BLADE_3,
+      BLADE_4,
+      BLADE_5,
+      BLADE_6,
+      BLADE_7,
+      BLADE_8,
+    ];
+  }
+
+  function getClamps() {
+    if (getFanId() === "FAN-002")
+      return [...CLAMP1, ...CLAMP2, ...CLAMP3, ...CLAMP4];
+    return [
+      ...CLAMP2,
+      ...CLAMP3,
+      ...CLAMP4,
+      ...CLAMP5,
+      ...CLAMP1,
+      ...CLAMP6,
+      ...CLAMP7,
+      ...CLAMP8,
+    ];
+  }
+
   function render3D() {
     // Step 1: Get a camera object.
     const camera = getCamera(10);
@@ -154,27 +204,7 @@ function TestPlatform() {
     const loader = new THREE.ObjectLoader();
     loadModelObjects(
       loader,
-      [
-        TOP_PLATE_MODEL,
-        BOTTOM_PLATE_MODEL,
-        BLADE_1,
-        BLADE_2,
-        BLADE_3,
-        BLADE_4,
-        BLADE_5,
-        BLADE_6,
-        BLADE_7,
-        BLADE_8,
-        ...CLAMP2,
-        ...CLAMP3,
-        ...CLAMP4,
-        ...CLAMP5,
-        ...CLAMP1,
-        ...CLAMP6,
-        ...CLAMP7,
-        ...CLAMP8,
-        HUB_MODEL,
-      ],
+      [...loadPlates(), ...getBlades(), ...getClamps(), HUB_MODEL],
       0,
       null,
       scene
@@ -254,7 +284,7 @@ function TestPlatform() {
           changeColor={changeColor}
         />
       )}
-      {/* <Header exportFn={exportFn} /> */}
+      <Header exportFn={exportFn} />
       <div id="platform3d"></div>
     </>
   );

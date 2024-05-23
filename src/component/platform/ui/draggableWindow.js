@@ -109,19 +109,24 @@ function DraggableWindow({ data, close, changeColor }) {
           </tr>
         </tbody>
       </Table>
-      <br />
-      <label>Select Material</label>
-      <br/>
-      <Form.Select
-        onChange={(event) => {
-          debugger;
-          changeColor(data.title.toUpperCase() + "_", event.target.value);
-        }}
-      >
-        {material.map((element) => {
-          return <option value={element}>{element}</option>;
-        })}
-      </Form.Select>
+
+      {material.length > 0 && (
+        <>
+          <br />
+          <label>Select Material</label>
+          <br />
+          <Form.Select
+            onChange={(event) => {
+              debugger;
+              changeColor(data.title.toUpperCase() + "_", event.target.value);
+            }}
+          >
+            {material.map((element) => {
+              return <option value={element}>{element}</option>;
+            })}
+          </Form.Select>
+        </>
+      )}
     </div>
   );
 }

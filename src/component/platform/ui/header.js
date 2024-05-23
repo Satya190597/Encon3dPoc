@@ -1,24 +1,15 @@
-import { Button, Navbar, Container, Nav } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 function Header({ exportFn }) {
   return (
-    <Navbar bg="dark" data-bs-theme="dark">
-      <Container>
-        <Navbar.Brand href="#">GeoVed 3D Model</Navbar.Brand>
-        <Nav className="me-auto">
-          <Button
-            size="lg"
-            variant="danger"
-            onClick={exportFn}
-            className="ms-2"
-            id="download-link"
-          >
-            Export
-          </Button>
-        </Nav>
-      </Container>
-    </Navbar>
+    <>
+      <div className="header">
+        <span>GeoVed 3D Model</span>&nbsp;&nbsp;
+        <Button variant="danger" onClick={() => exportFn()}>
+          Export
+        </Button>
+      </div>
+    </>
   );
 }
-
 export default Header;
