@@ -24,6 +24,7 @@ import { raycasting } from "../util/raycasting";
 import HEXA_COLOR from "../util/colors";
 import DraggableWindow from "../ui/draggableWindow";
 import Header from "../ui/header";
+import Loaders from "../util/loading";
 
 const TOP_PLATE_MODEL = "models/topPlate.json";
 const HUB_MODEL = "models/hub.json";
@@ -90,11 +91,13 @@ function TestPlatform() {
   var previousObject = useRef(null);
   const [openModel, setOpenModel] = useState(false);
   const [modelData, setModelData] = useState(null);
-  const [rendererObject,setRendererObject] = useState(null);
+  const [rendererObject, setRendererObject] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [previousModelObject, setPreviousModelObject] = useState(null);
 
   const setPreviousObject = (value) => (previousObject.current = value);
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
     render3D();
   }, []);
 
@@ -114,6 +117,7 @@ function TestPlatform() {
       scene.add(object);
       attachMovement(object);
       console.log(JSON.stringify(object));
+      setLoading(false);
       return;
     }
     if (object != null) {
@@ -242,6 +246,7 @@ function TestPlatform() {
 
   return (
     <>
+      {loading && <Loaders />}
       {openModel && (
         <DraggableWindow
           data={modelData}
