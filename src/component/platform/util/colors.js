@@ -3,6 +3,7 @@ const HEXA_COLOR = {
   aed6f1: 0xaed6f1,
   "98d7bf": 0x98d7bf,
   "8ef4fb": 0x8ef4fb,
-  "119092": 0x119092,
+  119092: 0x119092,
+  bb8fce: 0xbb8fce,
 };
 export default HEXA_COLOR;

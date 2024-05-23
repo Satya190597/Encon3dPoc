@@ -117,7 +117,7 @@ function TestPlatform() {
     debugger;
     if (
       (object.name === "TOP_PLATE" || object.name === "BOTTOM_PLATE") &&
-      getFanId() === "FAN-003"
+      getFanId() === "CNE-4419-60"
     )
       object.material.color.set(0xbb8fce);
   }
@@ -156,14 +156,15 @@ function TestPlatform() {
   }
 
   function loadPlates() {
-    if (getFanId() === "FAN-001") return [BOTTOM_PLATE_MODEL];
-    if (getFanId() === "FAN-002")
+    if (getFanId() === "ENC-5137-80") return [BOTTOM_PLATE_MODEL];
+    if (getFanId() === "CNE-4579-60")
       return [TOP_PLATE_MODEL_4, BOTTOM_PLATE_MODEL_4];
     return [TOP_PLATE_MODEL, BOTTOM_PLATE_MODEL];
   }
 
   function getBlades() {
-    if (getFanId() === "FAN-002") return [BLADE_1, BLADE_2, BLADE_3, BLADE_4];
+    if (getFanId() === "CNE-4579-60")
+      return [BLADE_1, BLADE_2, BLADE_3, BLADE_4];
     return [
       BLADE_1,
       BLADE_2,
@@ -177,7 +178,7 @@ function TestPlatform() {
   }
 
   function getClamps() {
-    if (getFanId() === "FAN-002")
+    if (getFanId() === "CNE-4579-60")
       return [...CLAMP1, ...CLAMP2, ...CLAMP3, ...CLAMP4];
     return [
       ...CLAMP2,
@@ -284,7 +285,7 @@ function TestPlatform() {
           changeColor={changeColor}
         />
       )}
-      <Header exportFn={exportFn} />
+      {!loading && <Header exportFn={exportFn} />}
       <div id="platform3d"></div>
     </>
   );

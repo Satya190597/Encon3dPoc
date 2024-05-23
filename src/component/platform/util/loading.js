@@ -10,6 +10,7 @@ function Loaders() {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "black",
+        overflow:"hidden"
       }}
     >
       <Spinner animation="grow" variant="info" />
