@@ -109,8 +109,12 @@ function DraggableWindow({ data, close, changeColor }) {
           </tr>
         </tbody>
       </Table>
-
-      {material.length > 0 && (
+      {
+        /*
+          ================ These changes are deprecated as per client requirement. ================
+        */
+      }
+      {/* {material.length > 0 && (
         <>
           <br />
           <label>Select Material</label>
@@ -126,7 +130,7 @@ function DraggableWindow({ data, close, changeColor }) {
             })}
           </Form.Select>
         </>
-      )}
+      )} */}
     </div>
   );
 }

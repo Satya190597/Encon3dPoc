@@ -168,6 +168,7 @@ function TestPlatform() {
       TOTAL_FAN_MODEL,
       (object) => {
         scene.add(object);
+        attachMovement(object);
         setLoading(false);
       },
       (xhr) => {},
