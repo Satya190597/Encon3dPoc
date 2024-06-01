@@ -26,6 +26,7 @@ import DraggableWindow from "../ui/draggableWindow";
 import Header from "../ui/header";
 import Loaders from "../util/loading";
 
+const TOTAL_FAN_MODEL = "models/complete-model/fan.json";
 const TOP_PLATE_MODEL = "models/topPlate.json";
 const HUB_MODEL = "models/hub.json";
 const BOTTOM_PLATE_MODEL = "models/bottomPlate.json";
@@ -162,6 +163,18 @@ function TestPlatform() {
     return [TOP_PLATE_MODEL, BOTTOM_PLATE_MODEL];
   }
 
+  function loadCompleteFanModel(loader, scene) {
+    loader.load(
+      TOTAL_FAN_MODEL,
+      (object) => {
+        scene.add(object);
+        setLoading(false);
+      },
+      (xhr) => {},
+      (error) => {}
+    );
+  }
+
   function getBlades() {
     if (getFanId() === "CNE-4579-60")
       return [BLADE_1, BLADE_2, BLADE_3, BLADE_4];
@@ -203,13 +216,14 @@ function TestPlatform() {
     addRenderer(document.getElementById("platform3d"), renderer);
     // Step 5: Load models object.
     const loader = new THREE.ObjectLoader();
-    loadModelObjects(
-      loader,
-      [...loadPlates(), ...getBlades(), ...getClamps(), HUB_MODEL],
-      0,
-      null,
-      scene
-    );
+    // loadModelObjects(
+    //   loader,
+    //   [...loadPlates(), ...getBlades(), ...getClamps(), HUB_MODEL],
+    //   0,
+    //   null,
+    //   scene
+    // );
+    loadCompleteFanModel(loader, scene);
     // Step 6: Setup Ray Caster.
     var raycaster = new THREE.Raycaster();
     var mouse = new THREE.Vector2();
