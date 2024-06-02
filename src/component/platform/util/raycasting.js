@@ -36,6 +36,7 @@ function getTitle(name) {
 }
 
 function highLightObject(object, setPreviousObject) {
+  debugger;
   if (object.name.includes("SCREW_SUB")) {
     setPreviousObject({
       MODEL_OBJECT: object.parent,

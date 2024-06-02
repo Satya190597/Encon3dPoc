@@ -26,7 +26,9 @@ import DraggableWindow from "../ui/draggableWindow";
 import Header from "../ui/header";
 import Loaders from "../util/loading";
 
-const TOTAL_FAN_MODEL = "models/complete-model/fan.json";
+const FAN_MODEL_ONE = "models/complete-model/fan.json";
+const FAN_MODEL_TWO = "models/complete-model/fan-2.json";
+const FAN_MODEL_THREE = "models/complete-model/fan-4.json";
 const TOP_PLATE_MODEL = "models/topPlate.json";
 const HUB_MODEL = "models/hub.json";
 const BOTTOM_PLATE_MODEL = "models/bottomPlate.json";
@@ -163,12 +165,23 @@ function TestPlatform() {
     return [TOP_PLATE_MODEL, BOTTOM_PLATE_MODEL];
   }
 
+  function getFanModelJsonObject() {
+    const fanId = new URLSearchParams(window.location.search).get("fanModelID");
+    if (fanId === "ENC-5137-80") {
+      return FAN_MODEL_ONE;
+    } else if (fanId == "CNE-4579-60") {
+      return FAN_MODEL_TWO;
+    } else if (fanId == "CNE-4419-60") {
+      return FAN_MODEL_THREE;
+    }
+  }
   function loadCompleteFanModel(loader, scene) {
     loader.load(
-      TOTAL_FAN_MODEL,
+      getFanModelJsonObject(),
       (object) => {
         scene.add(object);
         attachMovement(object);
+        console.log(JSON.stringify(object));
         setLoading(false);
       },
       (xhr) => {},

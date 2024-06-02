@@ -39,6 +39,7 @@ const HUB_DIAMETER = [
   { name: "1 M", value: 0, valueCal: 1 },
   { name: "2 M", value: 0.2, valueCal: 2 },
   { name: "3 M", value: 0.27, valueCal: 3 },
+  { name: "3 M", value: -0.5, valueCal: 3 },
 ];
 
 const BALDE_ANGLE = [
@@ -48,13 +49,13 @@ const BALDE_ANGLE = [
 ];
 
 const NUMBER_OF_BLADES = [
-  { name: "One", value: 1 },
+  { name: "One", value: 4 },
   { name: "Two", value: 2 },
   { name: "Four", value: 4 },
 ];
 
 const PLATE_TYPE = [
-  { name: "None", value: "NONE" },
+  { name: "None", value: "SINGLE" },
   { name: "Double", value: "DOUBLE" },
   { name: "Single", value: "SINGLE" },
 ];
@@ -138,7 +139,7 @@ function Hub() {
   const [diameterName, setDiameterName] = useState(HUB_DIAMETER[0].valueCal);
   const [plateType, setPlateType] = useState(PLATE_TYPE[0].value);
   const [numberOfBlades, setNumberOfBlades] = useState(
-    NUMBER_OF_BLADES[1].value
+    4
   );
   const [bladeAngle, setBladeAngle] = useState(BALDE_ANGLE[0].value);
   const [rpm, setRpm] = useState(0);
@@ -285,9 +286,10 @@ function Hub() {
       bladeModel.material.color.set(0x82e0aa);
       bladeA.material.color.set(0x82e0aa);
     }
-    
 
     scene.add(hubModel);
+
+    console.log(JSON.stringify(hubModel));
 
     const renderer = getRenderer(animation);
     setGlobalRenderer(renderer);

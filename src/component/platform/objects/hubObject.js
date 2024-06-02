@@ -28,36 +28,36 @@ export function hub(
   highlight
 ) {
   // ======================== Geometry ========================
-  const cylinderGeometry = new THREE.CylinderGeometry(diameter+1, diameter+1, 2, 32);
+  const cylinderGeometry = new THREE.CylinderGeometry(diameter+0.7, diameter+0.7, 1.5, 32);
   const cylinderGeometryHole = new THREE.CylinderGeometry(
-    0.9 + diameter,
-    0.9 + diameter,
+    0.5 + diameter,
+    0.5 + diameter,
     3,
     32
   );
   const cylinderTopPlateGeometry = new THREE.CylinderGeometry(
-    2 + diameter,
-    2 + diameter,
+    1.5 + diameter,
+    1.5 + diameter,
     0.2,
     32
   );
   const cylinderBottomPlateGeometry = new THREE.CylinderGeometry(
-    2 + diameter,
-    2 + diameter,
+    1.5 + diameter,
+    1.5 + diameter,
     0.2,
     32
   );
   const hubTopPlateGeometry = new THREE.CylinderGeometry(1.7, 1.7, 0.2, 32);
   const hubTopPlateHoleGeometry = new THREE.CylinderGeometry(
-    0.7 + diameter,
-    0.7 + diameter,
+    0.5 + diameter,
+    0.5 + diameter,
     0.1,
     32
   );
   const hubBottomPlateGeometry = new THREE.CylinderGeometry(1.7, 1.7, 0.2, 32);
   const hubTopBottomHoleGeometry = new THREE.CylinderGeometry(
-    0.7 + diameter,
-    0.7 + diameter,
+    0.5 + diameter,
+    0.5 + diameter,
     0.1,
     32
   );
@@ -107,9 +107,9 @@ export function hub(
     basic(0x000000)
   );
   // ======================== Set Position ========================
-  cylinderTopPlate.position.set(0, 1, 0);
+  cylinderTopPlate.position.set(0, 0.7, 0);
   cylinderTopPlate.updateMatrix();
-  cylinderBottomPlate.position.set(0, -1, 0);
+  cylinderBottomPlate.position.set(0, -0.7, 0);
   cylinderBottomPlate.updateMatrix();
   hubTopPlate.position.set(0, 1, 0);
   hubTopPlate.updateMatrix();
