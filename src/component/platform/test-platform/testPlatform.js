@@ -173,6 +173,8 @@ function TestPlatform() {
       return FAN_MODEL_TWO;
     } else if (fanId == "CNE-4419-60") {
       return FAN_MODEL_THREE;
+    } else {
+      return FAN_MODEL_ONE;
     }
   }
   function loadCompleteFanModel(loader, scene) {
