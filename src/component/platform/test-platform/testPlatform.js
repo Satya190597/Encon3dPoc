@@ -28,7 +28,8 @@ import Loaders from "../util/loading";
 
 const FAN_MODEL_ONE = "models/complete-model/fan.json";
 const FAN_MODEL_TWO = "models/complete-model/fan-2.json";
-const FAN_MODEL_THREE = "models/complete-model/fan-4.json";
+const FAN_MODEL_THREE = "models/complete-model/fan-3-new.json";
+const FAN_MODEL_FOUR = "models/complete-model/fan-4.json";
 const TOP_PLATE_MODEL = "models/topPlate.json";
 const HUB_MODEL = "models/hub.json";
 const BOTTOM_PLATE_MODEL = "models/bottomPlate.json";
@@ -172,9 +173,9 @@ function TestPlatform() {
     } else if (fanId == "CNE-4579-60") {
       return FAN_MODEL_TWO;
     } else if (fanId == "CNE-4419-60") {
-      return FAN_MODEL_THREE;
+      return FAN_MODEL_FOUR;
     } else {
-      return FAN_MODEL_ONE;
+      return FAN_MODEL_THREE;
     }
   }
   function loadCompleteFanModel(loader, scene) {
