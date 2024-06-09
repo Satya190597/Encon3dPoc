@@ -25,11 +25,16 @@ import HEXA_COLOR from "../util/colors";
 import DraggableWindow from "../ui/draggableWindow";
 import Header from "../ui/header";
 import Loaders from "../util/loading";
+import ZoomControls from "../ui/zoom-controls";
+import { loadTexture } from "../util/load-texture";
 
 const FAN_MODEL_ONE = "models/complete-model/fan.json";
 const FAN_MODEL_TWO = "models/complete-model/fan-2.json";
-const FAN_MODEL_THREE = "models/complete-model/fan-3-new.json";
+const FAN_MODEL_THREE = "models/complete-model/fan-5.json";
 const FAN_MODEL_FOUR = "models/complete-model/fan-4.json";
+
+const FAN_MODEL_COMPLETE = "models/complete-model/Product1.json";
+
 const TOP_PLATE_MODEL = "models/topPlate.json";
 const HUB_MODEL = "models/hub.json";
 const BOTTOM_PLATE_MODEL = "models/bottomPlate.json";
@@ -99,11 +104,12 @@ function TestPlatform() {
   const [modelData, setModelData] = useState(null);
   const [rendererObject, setRendererObject] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [zoomValue, setZoomValue] = useState(0.1);
 
   const setPreviousObject = (value) => (previousObject.current = value);
   useEffect(() => {
     render3D();
-  }, []);
+  }, [zoomValue]);
 
   function modelLoadingProgress(xhr, name) {
     console.log(name + " : " + (xhr.loaded / xhr.total) * 100 + "% loaded");
@@ -132,6 +138,7 @@ function TestPlatform() {
         setInitialMaterial(listOfModelObject[i]);
         object.add(listOfModelObject[i]);
       }
+
       scene.add(object);
       attachMovement(object);
       console.log(JSON.stringify(object));
@@ -169,13 +176,16 @@ function TestPlatform() {
   function getFanModelJsonObject() {
     const fanId = new URLSearchParams(window.location.search).get("fanModelID");
     if (fanId === "ENC-5137-80") {
-      return FAN_MODEL_ONE;
+      return FAN_MODEL_COMPLETE;
+      //return FAN_MODEL_ONE;
     } else if (fanId == "CNE-4579-60") {
-      return FAN_MODEL_TWO;
+      return FAN_MODEL_COMPLETE;
+      //return FAN_MODEL_TWO;
     } else if (fanId == "CNE-4419-60") {
-      return FAN_MODEL_FOUR;
+      return FAN_MODEL_COMPLETE;
+      //return FAN_MODEL_FOUR;
     } else {
-      return FAN_MODEL_THREE;
+      return FAN_MODEL_COMPLETE;
     }
   }
   function loadCompleteFanModel(loader, scene) {
@@ -183,6 +193,7 @@ function TestPlatform() {
       getFanModelJsonObject(),
       (object) => {
         scene.add(object);
+        object.scale.set(zoomValue, zoomValue, zoomValue);
         attachMovement(object);
         console.log(JSON.stringify(object));
         setLoading(false);
@@ -190,6 +201,25 @@ function TestPlatform() {
       (xhr) => {},
       (error) => {}
     );
+  }
+
+  function zoomIn() {
+    const currentZoomValue = zoomValue + 0.05;
+    if (currentZoomValue >= 0.4) {
+      alert("Maximum Zoom Achieved");
+      return;
+    }
+    setZoomValue(currentZoomValue);
+  }
+
+  function zoomOut() {
+    const currentZoomValue = zoomValue - 0.05;
+    if (currentZoomValue <= 0.1) {
+      alert("Minimum Zoom Achieved");
+      setZoomValue(0.1);
+      return;
+    }
+    setZoomValue(currentZoomValue);
   }
 
   function getBlades() {
@@ -224,7 +254,7 @@ function TestPlatform() {
 
   function render3D() {
     // Step 1: Get a camera object.
-    const camera = getCamera(10);
+    const camera = getCamera(0.2);
     // Step 2: Get a scene object.
     const scene = getScene();
     // Step 3: Get a renderer object.
@@ -317,6 +347,7 @@ function TestPlatform() {
         />
       )}
       {!loading && <Header exportFn={exportFn} />}
+      <ZoomControls zoomIn={zoomIn} zoomOut={zoomOut} />
       <div id="platform3d"></div>
     </>
   );

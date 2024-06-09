@@ -16,11 +16,13 @@ export function raycasting(
   // Calculate objects intersecting the picking ray
   var intersects = raycaster.intersectObjects(scene.children, true);
   // Check if any objects are intersected
+  debugger;
   if (intersects.length > 0) {
     // Perform actions for the clicked object
     var clickedObject = intersects[0].object;
     setOpenModel(true);
     setModelData({ title: getTitle(clickedObject.name) });
+    debugger
     highLightObject(clickedObject, setPreviousObject);
   }
 }
@@ -36,28 +38,29 @@ function getTitle(name) {
 }
 
 function highLightObject(object, setPreviousObject) {
-  debugger;
-  if (object.name.includes("SCREW_SUB")) {
+  if (object.name.includes("SCREW")) {
+    console.log(object.material.color.getHexString());
     setPreviousObject({
-      MODEL_OBJECT: object.parent,
-      COLOR: object.parent.material.color.getHexString(),
+      MODEL_OBJECT: object,
+      COLOR: object.material.color.getHexString(),
     });
-    object.parent.material.color.set(0xe74c3c);
+    object.material.color.set(0xe74c3c);
+    return;
   } else if (object.name.includes("BLADE_")) {
-    if (object.children === null) return;
-    let bladeSurfaceObject = null;
-    for (let i = 0; i < object.children.length; i++) {
-      if (object.children[i].name.includes("_SURFACE")) {
-        bladeSurfaceObject = object.children[i];
-      }
-    }
-    if (bladeSurfaceObject === null) return;
-    console.log(bladeSurfaceObject.material.color.getHexString());
+    // if (object.children === null) return;
+    // let bladeSurfaceObject = null;
+    // for (let i = 0; i < object.children.length; i++) {
+    //   if (object.children[i].name.includes("_SURFACE")) {
+    //     bladeSurfaceObject = object.children[i];
+    //   }
+    // }
+    // if (bladeSurfaceObject === null) return;
+    console.log(object.material.color.getHexString());
     setPreviousObject({
-      MODEL_OBJECT: bladeSurfaceObject,
-      COLOR: bladeSurfaceObject.material.color.getHexString(),
+      MODEL_OBJECT: object,
+      COLOR: object.material.color.getHexString(),
     });
-    bladeSurfaceObject.material.color.set(0xe74c3c);
+    object.material.color.set(0xe74c3c);
   } else if (
     object.name.includes("_BACK_HOLDER") ||
     object.name.includes("_CLAMP")

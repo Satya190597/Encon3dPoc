@@ -21,3 +21,18 @@
   right: 0;
   z-index: 100;
 }
+
+.zoom-controls {
+  position: absolute;
+  width: 25px;
+  height: 60px;
+  background-color: #0B5345;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 10px;
+  color: #FDFEFE;
+  border-color: #FDFEFE;
+}
