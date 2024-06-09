@@ -1,0 +1,38 @@
+.draggable {
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #e0e0e0;
+  padding: 1%;
+  cursor: move;
+  overflow-y: scroll;
+}
+
+.header {
+  position: absolute;
+  width: 20%;
+  height: 80px;
+  padding: 1%;
+  color: white;
+  right: 0;
+  z-index: 100;
+}
+
+.zoom-controls {
+  position: absolute;
+  width: 25px;
+  height: 60px;
+  background-color: #0B5345;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 10px;
+  color: #FDFEFE;
+  border-color: #FDFEFE;
+}

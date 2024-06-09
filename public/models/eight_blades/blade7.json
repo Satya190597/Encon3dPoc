@@ -1,0 +1,114 @@
+{
+	"metadata": {
+		"version": 4.6,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "936f4801-1bce-4662-bb3f-efdde19f2f95",
+			"type": "CylinderGeometry",
+			"radiusTop": 0.4,
+			"radiusBottom": 0.7,
+			"height": 5.5,
+			"radialSegments": 2,
+			"heightSegments": 1,
+			"openEnded": false,
+			"thetaStart": 0,
+			"thetaLength": 6.283185307179586
+		},
+		{
+			"uuid": "999a4b0f-f291-4d19-9053-819ee74241f3",
+			"type": "CylinderGeometry",
+			"radiusTop": 0.5,
+			"radiusBottom": 0.5,
+			"height": 0.2,
+			"radialSegments": 32,
+			"heightSegments": 1,
+			"openEnded": false,
+			"thetaStart": 0,
+			"thetaLength": 6.283185307179586
+		},
+		{
+			"uuid": "663deb16-a272-4cd2-9020-c9ac22d355ef",
+			"type": "CylinderGeometry",
+			"radiusTop": 0.3,
+			"radiusBottom": 0.3,
+			"height": 0.5,
+			"radialSegments": 32,
+			"heightSegments": 1,
+			"openEnded": false,
+			"thetaStart": 0,
+			"thetaLength": 6.283185307179586
+		}],
+	"materials": [
+		{
+			"uuid": "f9d63511-53a6-4ac8-8db2-51fe785e010a",
+			"type": "MeshBasicMaterial",
+			"color": 16777215,
+			"envMapRotation": [0,0,0,
+				"XYZ"],
+			"reflectivity": 1,
+			"refractionRatio": 0.98,
+			"blendColor": 0
+		},
+		{
+			"uuid": "43c0894b-2605-41e7-b118-22d5e0e359c2",
+			"type": "MeshMatcapMaterial",
+			"color": 9368827,
+			"blendColor": 0
+		},
+		{
+			"uuid": "111b6beb-f20e-4610-9dbb-9a55f330b53f",
+			"type": "MeshMatcapMaterial",
+			"color": 3980759,
+			"blendColor": 0
+		},
+		{
+			"uuid": "b71b2dd4-a619-48a4-a00b-37e08c597282",
+			"type": "MeshMatcapMaterial",
+			"color": 7393982,
+			"blendColor": 0
+		}],
+	"object": {
+		"uuid": "9910b852-29f6-4022-8ed2-d817d066005d",
+		"type": "Mesh",
+		"name": "BLADE_7",
+		"layers": 1,
+		"matrix": [-4.440892098500627e-16,1.0000000000000004,-5.551115123125784e-17,0,-0.7039946536606786,-2.2204460492503136e-16,0.7102052714653573,0,0.7102052714653571,2.220446049250313e-16,0.7039946536606784,0,-4.772782126463433,0.029203018099660305,4.792892330995286,1],
+		"up": [0,1,0],
+		"geometry": "936f4801-1bce-4662-bb3f-efdde19f2f95",
+		"material": "f9d63511-53a6-4ac8-8db2-51fe785e010a",
+		"children": [
+			{
+				"uuid": "50ca9acf-0f4c-4f90-b760-e6043b14c289",
+				"type": "Mesh",
+				"name": "BLADE7_SURFACE",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+				"up": [0,1,0],
+				"geometry": "936f4801-1bce-4662-bb3f-efdde19f2f95",
+				"material": "43c0894b-2605-41e7-b118-22d5e0e359c2"
+			},
+			{
+				"uuid": "bafe0dde-ffee-4fd1-b3bb-70f5fdbc765b",
+				"type": "Mesh",
+				"name": "BLADE7_BACK_HOLDER",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,-0.002531965449822593,-4.09,0,1],
+				"up": [0,1,0],
+				"geometry": "999a4b0f-f291-4d19-9053-819ee74241f3",
+				"material": "111b6beb-f20e-4610-9dbb-9a55f330b53f"
+			},
+			{
+				"uuid": "5eb4401a-db33-4c8c-9427-361ce7ca1de4",
+				"type": "Mesh",
+				"name": "BLADE7_CLAMP",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,2.905,0,0,0,0,1,0,0,-3.344,0,1],
+				"up": [0,1,0],
+				"geometry": "663deb16-a272-4cd2-9020-c9ac22d355ef",
+				"material": "b71b2dd4-a619-48a4-a00b-37e08c597282"
+			}]
+	}
+}

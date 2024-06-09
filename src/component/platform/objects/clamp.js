@@ -39,7 +39,7 @@ function createScrew() {
   return point;
 }
 function addSocketForHub(cylinder, thickness, hubDiameter) {
-  let socket = getCylinder(hubDiameter, thickness, 0xfdfefe);
+  let socket = getCylinder(0.5, thickness, 0xfdfefe);
   cylinder = CSG.subtract(cylinder, socket);
   cylinder.updateMatrix();
   return cylinder;
@@ -133,8 +133,8 @@ function createOuterSocketsOfPlate(
   for (let i = 0; i < 10; i++) {
     const hubScrewSocket = createScrew(); // getCylinder(screwDiameter, 0.25, 0x000000);
     const angleH = i * (360 / 10);
-    const xH = 0 + 1.5 * Math.cos((angleH * Math.PI) / 180);
-    const yH = 0 + 1.5 * Math.sin((angleH * Math.PI) / 180);
+    const xH = 0 + 1 * Math.cos((angleH * Math.PI) / 180);
+    const yH = 0 + 1 * Math.sin((angleH * Math.PI) / 180);
     hubScrewSocket.position.set(xH, 0.01, yH);
     if (highlight === "SCREW") hubScrewSocket.material.color.set(0x82e0aa);
     arrayOfHubScrewSocket.push(hubScrewSocket);
