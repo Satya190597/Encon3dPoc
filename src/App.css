@@ -22,10 +22,20 @@
   z-index: 100;
 }
 
+.header-light {
+  position: absolute;
+  width: 20%;
+  height: 80px;
+  padding: 1%;
+  color: black;
+  right: 0;
+  z-index: 100;
+}
+
 .zoom-controls {
   position: absolute;
   width: 25px;
-  height: 60px;
+  height: 50px;
   background-color: #0B5345;
   bottom: 0;
   right: 0;
@@ -35,4 +45,19 @@
   margin: 10px;
   color: #FDFEFE;
   border-color: #FDFEFE;
+}
+
+.zoom-in { 
+  right: 1vw !important;
+}
+
+.zoom-out {
+  right: 1vw !important;
+  bottom: 0vh !important;
+}
+
+
+.theme-controls {
+  left: 1vw !important;
+  right: 0vw !important;
 }
