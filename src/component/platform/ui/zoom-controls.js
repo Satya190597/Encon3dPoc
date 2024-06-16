@@ -1,13 +1,23 @@
 import { BsZoomIn } from "react-icons/bs";
 import { BsZoomOut } from "react-icons/bs";
-function ZoomControls({zoomIn,zoomOut}) {
+import { Container, Button, Link } from "react-floating-action-button";
+function ZoomControls({ zoomIn, zoomOut }) {
   return (
     <>
-      <div className="zoom-controls">
-        <BsZoomIn onClick={zoomIn}/>
-        <br/>
-        <BsZoomOut onClick={zoomOut}/>
-      </div>
+      <Container className="zoom-in">
+        <Button
+          tooltip="Zoom In"
+          icon="fas fa-plus"
+          onClick={() => zoomIn()}
+        />
+      </Container>
+      <Container className="zoom-out">
+        <Button
+          tooltip="Zoom Out"
+          icon="fas fa-minus"
+          onClick={() => zoomOut()}
+        />
+      </Container>
     </>
   );
 }

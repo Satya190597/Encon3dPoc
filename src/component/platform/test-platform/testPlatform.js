@@ -27,6 +27,7 @@ import Header from "../ui/header";
 import Loaders from "../util/loading";
 import ZoomControls from "../ui/zoom-controls";
 import { loadTexture } from "../util/load-texture";
+import ThemeControls from "../ui/theme";
 
 const FAN_MODEL_ONE = "models/complete-model/fan.json";
 const FAN_MODEL_TWO = "models/complete-model/fan-2.json";
@@ -105,11 +106,12 @@ function TestPlatform() {
   const [rendererObject, setRendererObject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [zoomValue, setZoomValue] = useState(0.1);
+  const [toggleDarkMode, setToggleDarkMode] = useState(true);
 
   const setPreviousObject = (value) => (previousObject.current = value);
   useEffect(() => {
     render3D();
-  }, [zoomValue]);
+  }, [zoomValue, toggleDarkMode]);
 
   function modelLoadingProgress(xhr, name) {
     console.log(name + " : " + (xhr.loaded / xhr.total) * 100 + "% loaded");
@@ -214,9 +216,9 @@ function TestPlatform() {
 
   function zoomOut() {
     const currentZoomValue = zoomValue - 0.05;
-    if (currentZoomValue <= 0.1) {
+    if (currentZoomValue <= 0.04) {
       alert("Minimum Zoom Achieved");
-      setZoomValue(0.1);
+      setZoomValue(0.05);
       return;
     }
     setZoomValue(currentZoomValue);
@@ -252,11 +254,18 @@ function TestPlatform() {
     ];
   }
 
+  function fnToggleDarkMode() {
+    setToggleDarkMode((value) => !value);
+  }
+
   function render3D() {
     // Step 1: Get a camera object.
     const camera = getCamera(0.2);
     // Step 2: Get a scene object.
     const scene = getScene();
+    scene.background = toggleDarkMode
+      ? new THREE.Color(0x000000)
+      : new THREE.Color(0xe8eaf6);
     // Step 3: Get a renderer object.
     const renderer = getRenderer(animation);
     // Step 4: Add renderer DOM to the actual DOM.
@@ -346,7 +355,9 @@ function TestPlatform() {
           changeColor={changeColor}
         />
       )}
-      {!loading && <Header exportFn={exportFn} />}
+      {!loading && (
+        <Header exportFn={exportFn} fnToggleDarkMode={fnToggleDarkMode} isDarkMode={toggleDarkMode} />
+      )}
       <ZoomControls zoomIn={zoomIn} zoomOut={zoomOut} />
       <div id="platform3d"></div>
     </>
