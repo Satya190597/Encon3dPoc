@@ -35,6 +35,7 @@ const FAN_MODEL_THREE = "models/complete-model/fan-5.json";
 const FAN_MODEL_FOUR = "models/complete-model/fan-4.json";
 
 const FAN_MODEL_COMPLETE = "models/complete-model/Product1.json";
+const CNE_4579_60 = "models/complete-model/Product68.json";
 
 const TOP_PLATE_MODEL = "models/topPlate.json";
 const HUB_MODEL = "models/hub.json";
@@ -181,7 +182,7 @@ function TestPlatform() {
       return FAN_MODEL_COMPLETE;
       //return FAN_MODEL_ONE;
     } else if (fanId == "CNE-4579-60") {
-      return FAN_MODEL_COMPLETE;
+      return CNE_4579_60;
       //return FAN_MODEL_TWO;
     } else if (fanId == "CNE-4419-60") {
       return FAN_MODEL_COMPLETE;
@@ -256,6 +257,10 @@ function TestPlatform() {
 
   function fnToggleDarkMode() {
     setToggleDarkMode((value) => !value);
+  }
+
+  function isSixBladeFan() {
+    return true;
   }
 
   function render3D() {
