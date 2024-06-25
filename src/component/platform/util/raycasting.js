@@ -22,23 +22,29 @@ export function raycasting(
     var clickedObject = intersects[0].object;
     setOpenModel(true);
     setModelData({ title: getTitle(clickedObject.name) });
-    debugger
+    debugger;
     highLightObject(clickedObject, setPreviousObject);
   }
 }
 
 function getTitle(name) {
-  if (name.includes("SCREW")) return "Screw";
+  if (name.includes("SCREW") || name.includes("NUT") || name.includes("BOLT"))
+    return "Screw";
   if (name.includes("PLATE")) return "Plate";
   if (name.includes("BLADE_")) return "Blade";
   if (name.includes("BACK_HOLDER")) return "Blade";
   if (name.includes("_CLAMP")) return "Blade";
   if (name.includes("CLAMP")) return "Clamp";
+  if (name.includes("TAPER_BUSH")) return "Taper Bush";
   return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 }
 
 function highLightObject(object, setPreviousObject) {
-  if (object.name.includes("SCREW")) {
+  if (
+    object.name.includes("SCREW") ||
+    object.name.includes("NUT") ||
+    object.name.includes("BOLT")
+  ) {
     console.log(object.material.color.getHexString());
     setPreviousObject({
       MODEL_OBJECT: object,

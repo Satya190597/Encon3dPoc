@@ -34,6 +34,9 @@ function DraggableWindow({ data, close, changeColor }) {
         } else if (data.title.toLowerCase() === "clamp") {
           setDetails(result["CLAMP"]["DETAILS"]);
           setImage(result["CLAMP"]["IMAGE"]);
+        } else if (data.title.toLowerCase() === "taper bush") {
+          setDetails(result["TAPER_BUSH"]["DETAILS"]);
+          setImage(result["TAPER_BUSH"]["IMAGE"]);
         }
       })
       .catch((error) => {
@@ -109,11 +112,9 @@ function DraggableWindow({ data, close, changeColor }) {
           </tr>
         </tbody>
       </Table>
-      {
-        /*
+      {/*
           ================ These changes are deprecated as per client requirement. ================
-        */
-      }
+        */}
       {/* {material.length > 0 && (
         <>
           <br />
