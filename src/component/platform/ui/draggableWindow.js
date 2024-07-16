@@ -25,7 +25,7 @@ function DraggableWindow({ data, close, changeColor }) {
           setDetails(result["PLATE"]["DETAILS"]);
           setImage(result["PLATE"]["IMAGE"]);
         } else if (data.title.toLowerCase() === "blade") {
-          setDetails(result["BLADE"]["DETAILS"]);
+          //setDetails(result["BLADE"]["DETAILS"]);
           setImage(result["BLADE"]["IMAGE"]);
           debugger;
           if (result["BLADE"]["MATERIAL"]) {
@@ -99,16 +99,48 @@ function DraggableWindow({ data, close, changeColor }) {
         </thead>
         <tbody>
           <tr>
-            <td>Diameter</td>
-            <td>20 MM</td>
+            <td>Blade Natural Frequency Mode 1</td>
+            <td>15 Hz</td>
           </tr>
           <tr>
-            <td>Height</td>
-            <td>10 MM</td>
+            <td>Blade Type</td>
+            <td>U-Type</td>
           </tr>
           <tr>
-            <td>Width</td>
-            <td>5 MM</td>
+            <td>Blade Natural Frequency Mode 2</td>
+            <td>15.25 Hz</td>
+          </tr>
+          <tr>
+            <td>Shoulder Chord</td>
+            <td>48.2 mm</td>
+          </tr>
+          <tr>
+            <td>Tip Chord</td>
+            <td>19.28</td>
+          </tr>
+          <tr>
+            <td>Tip Angle Deviation From Chord</td>
+            <td>7 o</td>
+          </tr>
+          <tr>
+            <td>Twist</td>
+            <td>15 o</td>
+          </tr>
+          <tr>
+            <td>Blade Length</td>
+            <td>241 mm</td>
+          </tr>
+          <tr>
+            <td>Blade Material</td>
+            <td>FRP</td>
+          </tr>
+          <tr>
+            <td>Blade Angle min</td>
+            <td>4 o</td>
+          </tr>
+          <tr>
+            <td>Blade Angle max</td>
+            <td>18 o</td>
           </tr>
         </tbody>
       </Table>
